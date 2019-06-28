@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <input value="Send Message" class="btn btn-primary btn-modify" @click="send()">
+                <input value="Отправить" class="btn btn-primary btn-modify" @click="send()">
             </div>
         </div>
     </form>

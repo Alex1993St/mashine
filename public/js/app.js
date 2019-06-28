@@ -50223,7 +50223,7 @@ var render = function() {
       _c("div", { staticClass: "form-group" }, [
         _c("input", {
           staticClass: "btn btn-primary btn-modify",
-          attrs: { value: "Send Message" },
+          attrs: { value: "Отправить" },
           on: {
             click: function($event) {
               return _vm.send()

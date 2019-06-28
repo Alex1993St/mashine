@@ -11,7 +11,7 @@
 				   			<div class="col-md-6 col-md-offset-3 slider-text slider-text-bg">
 				   				<div class="slider-text-inner text-center">
 				   					<h1>Contact</h1>
-										<h2>Free html5 templates Made by <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a></h2>
+									<h2>Here must be map</h2>
 				   				</div>
 				   			</div>
 				   		</div>
