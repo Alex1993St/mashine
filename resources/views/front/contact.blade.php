@@ -1,37 +1,5 @@
 @extends('layouts.app')
 @section('content')
-	<div class="fh5co-loader"></div>
-
-	<div id="page">
-	<nav class="fh5co-nav" role="navigation">
-		<div class="container-wrap">
-			<div class="top-menu">
-				<div class="row">
-					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="index.blade.php">Neat</a></div>
-					</div>
-					<div class="col-xs-10 text-right menu-1">
-						<ul>
-							<li><a href="index.blade.php">Home</a></li>
-							<li><a href="work.blade.php">Work</a></li>
-							<li class="has-dropdown">
-								<a href="blog.blade.php">Blog</a>
-								<ul class="dropdown">
-									<li><a href="#">Web Design</a></li>
-									<li><a href="#">eCommerce</a></li>
-									<li><a href="#">Branding</a></li>
-									<li><a href="#">API</a></li>
-								</ul>
-							</li>
-							<li><a href="about.blade.php">About</a></li>
-							<li class="active"><a href="contact.blade.php">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</nav>
 	<div class="container-wrap">
 		<aside id="fh5co-hero">
 			<div class="flexslider">
@@ -70,28 +38,7 @@
 					</ul>
 				</div>
 				<div class="col-md-7 col-md-push-1 animate-box">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Name">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Email">
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<textarea name="" class="form-control" id="" cols="30" rows="7" placeholder="Message"></textarea>
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="form-group">
-								<input type="submit" value="Send Message" class="btn btn-primary btn-modify">
-							</div>
-						</div>
-					</div>
+                    <contact></contact>
 				</div>
 			</div>
 		</div>

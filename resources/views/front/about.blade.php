@@ -1,38 +1,6 @@
 @extends('layouts.app')
 @section('content')
-	<div class="fh5co-loader"></div>
-
-	<div id="page">
-	<nav class="fh5co-nav" role="navigation">
-		<div class="container-wrap">
-			<div class="top-menu">
-				<div class="row">
-					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="index.blade.php">Neat</a></div>
-					</div>
-					<div class="col-xs-10 text-right menu-1">
-						<ul>
-							<li><a href="index.blade.php">Home</a></li>
-							<li><a href="work.blade.php">Work</a></li>
-							<li class="has-dropdown">
-								<a href="blog.blade.php">Blog</a>
-								<ul class="dropdown">
-									<li><a href="#">Web Design</a></li>
-									<li><a href="#">eCommerce</a></li>
-									<li><a href="#">Branding</a></li>
-									<li><a href="#">API</a></li>
-								</ul>
-							</li>
-							<li class="active"><a href="about.blade.php">About</a></li>
-							<li><a href="contact.blade.php">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</nav>
-	<div class="container-wrap">
+    <div class="container-wrap">
 		<aside id="fh5co-hero">
 			<div class="flexslider">
 				<ul class="slides">
