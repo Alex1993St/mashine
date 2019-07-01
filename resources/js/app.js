@@ -12,7 +12,7 @@ import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import VueAxios from 'vue-axios'
 import axios from 'axios'
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios);
 
 import ru from 'vee-validate/dist/locale/ru';
 import VueI18n from 'vue-i18n';
@@ -29,6 +29,14 @@ Vue.use(VeeValidate, {
     }
 });
 
+import Vuetify from 'vuetify';
+Vue.use(Vuetify);
+
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+import router from './routes';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -40,9 +48,8 @@ Vue.use(VeeValidate, {
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
 Vue.component('contact', require('./components/ContactComponent').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -54,5 +61,6 @@ Vue.component('contact', require('./components/ContactComponent').default);
 
 const app = new Vue({
     //i18n,
+    router,
     el: '#app',
 });

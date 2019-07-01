@@ -38,25 +38,27 @@
 <div class="gototop js-top">
     <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
 </div>
-<script src="js/app.js"></script>
+<script src="{{asset('js/app.js')}}"></script>
 
 <!-- jQuery -->
-<script src="js/jquery.min.js"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
 <!-- jQuery Easing -->
-<script src="js/jquery.easing.1.3.js"></script>
+<script src="{{asset('js/jquery.easing.1.3.js')}}"></script>
 <!-- Bootstrap -->
-<script src="js/bootstrap.min.js"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
 <!-- Waypoints -->
-<script src="js/jquery.waypoints.min.js"></script>
+<script src="{{asset('js/jquery.waypoints.min.js')}}"></script>
 <!-- Flexslider -->
-<script src="js/jquery.flexslider-min.js"></script>
+<script src="{{asset('js/jquery.flexslider-min.js')}}"></script>
 <!-- Magnific Popup -->
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/magnific-popup-options.js"></script>
+<script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
+<script src="{{asset('js/magnific-popup-options.js')}}"></script>
 <!-- Counters -->
-<script src="js/jquery.countTo.js"></script>
+<script src="{{asset('js/jquery.countTo.js')}}"></script>
 <!-- Main -->
-<script src="js/main.js"></script>
+<script src="{{asset('js/main.js')}}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 
 </body>
 </html>
