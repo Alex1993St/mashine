@@ -3,7 +3,10 @@
 
 Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function(){
     Route::get('/dashboard', 'Admin\AdminDashboardController@index')->name('dashboard');
-    Route::get('/blog', 'Admin\BlogController@index')->name('blog_show');
+    //Route::get('/blog', 'Admin\BlogController@index')->name('blog_show');
+    Route::resources([
+        'blog' => 'Admin\BlogController'
+    ]);
 });
 
 Route::get('logout', 'Auth\LoginController@logout');

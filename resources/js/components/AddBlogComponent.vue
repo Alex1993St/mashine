@@ -1,66 +1,118 @@
 <template>
-    <div id="app">
-        <form class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Title" v-model="blog.title" name="title" v-validate="'required'" data-vv-as="Title">
-                    <span>{{ errors.first('title') }}</span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Short text" v-model="blog.short_text" name="short_text" v-validate="'required'" data-vv-as="Short text">
-                    <span>{{ errors.first('short_text') }}</span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <textarea name="description" v-model="blog.description" class="form-control" cols="30" rows="7" placeholder="Description" v-validate="'required'" data-vv-as="Description"></textarea>
-                    <span>{{ errors.first('description') }}</span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <input type='file' name="img" class="form-control" v-validate="'required'" ref="file" data-vv-as="Image" v-on:change="uploadFile">
-                    <span>{{ errors.first('img') }}</span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    <input value="Отправить" class="btn btn-primary btn-modify" @click="send()">
-                </div>
-            </div>
-        </form>
-    </div>
+    <v-app id="inspire">
+        <v-container fluid grid-list-xl>
+            <v-layout wrap align-center>
+                <v-flex xs12 sm12 d-flex>
+                    <form ref="form">
+                        <v-text-field
+                            v-validate="'required'"
+                            label="Title"
+                            v-model="blog.title"
+                            data-vv-name="title"
+                            name="title"
+                            :error-messages="errors.collect('title')"
+                        ></v-text-field>
+                        <v-text-field
+                            v-validate="'required'"
+                            name="short"
+                            data-vv-name="short"
+                            label="Short"
+                            v-model="blog.short_text"
+                            :error-messages="errors.collect('short')"
+                        ></v-text-field>
+                        <v-text-field
+                            v-validate="'required'"
+                            label="description"
+                            v-model="blog.description"
+                            name="description"
+                            data-vv-name="description"
+                            :error-messages="errors.collect('description')"
+                        ></v-text-field>
+                        <!--<v-text-field-->
+                            <!--v-validate="'required'"-->
+                            <!--label="img"-->
+                            <!--v-model="blog.img"-->
+                            <!--name="img"-->
+                            <!--data-vv-name="img"-->
+                            <!--:error-messages="errors.collect('img')"-->
+                        <!--&gt;</v-text-field>-->
+                        <upload-btn
+                            title="Button With Icon"
+                            @file-update="update"
+                        >
+                            <template slot="icon">
+                                <v-icon>add</v-icon>
+                            </template>
+                        </upload-btn>
+                        <v-select
+                            v-validate="'required'"
+                            :items="status"
+                            item-text="text"
+                            item-value="value"
+                            label="Standard"
+                            v-model="blog.status"
+                            name="status"
+                            :error-messages="errors.collect('status')"
+                        ></v-select>
+
+                        <v-btn @click="submit" color="success" dark class="mb-2">submit</v-btn>
+                        <v-btn @click="clear" color="danger" dark class="mb-2">clear</v-btn>
+                        <!--<v-btn @click="back" color="info" dark class="mb-2">back</v-btn>-->
+                    </form>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-app>
 </template>
 
 <script>
+    import UploadButton from 'vuetify-upload-button';
+
     export default {
         name: "AddBlogComponent",
-        data: () => ({
-                blog: {
-                    title: '',
-                    description: '',
-                    short_text: '',
-                    img: '',
+        data() {
+            return {
+              blog: {},
+              status:[
+                  {text: 'active', value: '1'},
+                  {text: 'not active', value: '0'}
+              ]
+            }
+        },
 
-                }
-        }),
+        components: {
+            'upload-btn': UploadButton
+        },
 
         methods:{
-            send(){
-               this.$validator.validateAll().then(valid => {
+            submit(){
+               let vm = this;vm.$validator.validateAll().then(valid => {
+
                    if(valid){
-                       console.log('axios');
+                      vm.axios.post('/admin/blog',{
+                          'blog': vm.blog
+                      }).then(function(data){
+                          console.log(data);
+                      }).catch(function(err){
+                          console.log(err);
+                      })
                    }else {
                        console.log('err');
                    }
                })
             },
 
-            uploadFile(){
-                this.blog.img = this.$refs.file.files[0];
-                console.log(this.blog.img);
+            update(file){
+                this.blog.img = file;
+            },
+
+            clear () {
+                this.$refs.form.reset();
+                this.blog.title = '';
+                this.blog.description = '';
+                this.blog.short_text = '';
+                this.blog.img = '';
+                this.blog.status = '';
             }
         },
 

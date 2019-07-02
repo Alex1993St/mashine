@@ -20,6 +20,7 @@ class CreateBlogsTable extends Migration
             $table->string('short_text', 255);
             $table->text('description');
             $table->text('img');
+            $table->enum('status', [ '0', '1'])->default('1');
             $table->timestamps();
         });
     }

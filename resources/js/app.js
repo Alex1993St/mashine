@@ -60,7 +60,6 @@ Vue.component('contact', require('./components/ContactComponent').default);
 
 
 const app = new Vue({
-    //i18n,
     router,
     el: '#app',
 });

@@ -58,7 +58,7 @@
 <!-- Main -->
 <script src="{{asset('js/main.js')}}"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+{{--<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>--}}
 
 </body>
 </html>

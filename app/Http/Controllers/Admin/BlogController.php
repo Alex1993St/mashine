@@ -15,7 +15,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-       dd(1);
+
     }
 
     /**
@@ -36,7 +36,17 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $arr = [
+            'title' =>  $data['blog']['title'],
+            'slug' => Blog::createSlug($data['blog']['title']),
+            'description' =>  $data['blog']['description'],
+            'img' =>  !empty($data['blog']['img']) ? $data['blog']['img'] : 'empty',
+            'short_text' =>  $data['blog']['short_text'],
+        ];
+
+        Blog::create($arr);
     }
 
     /**
