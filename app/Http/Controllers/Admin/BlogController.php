@@ -38,12 +38,18 @@ class BlogController extends Controller
     {
         $data = $request->all();
 
+        $getImage = $request->img;
+
+        $image = $getImage->getClientOriginalName();
+
+        $getImage->move('uploads/', $image);
+
         $arr = [
-            'title' =>  $data['blog']['title'],
-            'slug' => Blog::createSlug($data['blog']['title']),
-            'description' =>  $data['blog']['description'],
-            'img' =>  !empty($data['blog']['img']) ? $data['blog']['img'] : 'empty',
-            'short_text' =>  $data['blog']['short_text'],
+            'title' =>  $data['title'],
+            'slug' => Blog::createSlug($data['title']),
+            'description' =>  $data['description'],
+            'img' =>  $image,
+            'short_text' =>  $data['short_text'],
         ];
 
         Blog::create($arr);

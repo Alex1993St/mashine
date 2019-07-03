@@ -1719,53 +1719,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddBlogComponent",
@@ -1786,12 +1739,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
+      var _this = this;
+
       var vm = this;
       vm.$validator.validateAll().then(function (valid) {
+        var config = {
+          'content-type': 'multipart/form-data'
+        };
+        var formData = new FormData();
+        formData.append('title', _this.blog.title);
+        formData.append('short_text', _this.blog.short_text);
+        formData.append('description', _this.blog.description);
+        formData.append('status', _this.blog.status);
+        formData.append('img', _this.blog.img);
+
         if (valid) {
-          vm.axios.post('/admin/blog', {
-            'blog': vm.blog
-          }).then(function (data) {
+          vm.axios.post('/admin/blog', formData, config).then(function (data) {
             console.log(data);
           })["catch"](function (err) {
             console.log(err);
@@ -1801,8 +1764,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    update: function update(file) {
-      this.blog.img = file;
+    update: function update() {
+      this.blog.img = this.$refs.upload.files[0];
     },
     clear: function clear() {
       this.$refs.form.reset();
@@ -50995,146 +50958,128 @@ var render = function() {
             { attrs: { wrap: "", "align-center": "" } },
             [
               _c("v-flex", { attrs: { xs12: "", sm12: "", "d-flex": "" } }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.blog.title,
+                      expression: "blog.title"
+                    }
+                  ],
+                  attrs: { type: "text", name: "title", placeholder: "Title" },
+                  domProps: { value: _vm.blog.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.blog, "title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.blog.short_text,
+                      expression: "blog.short_text"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    name: "short_text",
+                    placeholder: "Short text"
+                  },
+                  domProps: { value: _vm.blog.short_text },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.blog, "short_text", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.blog.description,
+                      expression: "blog.description"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    name: "description",
+                    placeholder: "Description"
+                  },
+                  domProps: { value: _vm.blog.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.blog, "description", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
                 _c(
-                  "form",
-                  { ref: "form" },
-                  [
-                    _c("v-text-field", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      attrs: {
-                        label: "Title",
-                        "data-vv-name": "title",
-                        name: "title",
-                        "error-messages": _vm.errors.collect("title")
-                      },
-                      model: {
-                        value: _vm.blog.title,
-                        callback: function($$v) {
-                          _vm.$set(_vm.blog, "title", $$v)
-                        },
-                        expression: "blog.title"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("v-text-field", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      attrs: {
-                        name: "short",
-                        "data-vv-name": "short",
-                        label: "Short",
-                        "error-messages": _vm.errors.collect("short")
-                      },
-                      model: {
-                        value: _vm.blog.short_text,
-                        callback: function($$v) {
-                          _vm.$set(_vm.blog, "short_text", $$v)
-                        },
-                        expression: "blog.short_text"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("v-text-field", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      attrs: {
-                        label: "description",
-                        name: "description",
-                        "data-vv-name": "description",
-                        "error-messages": _vm.errors.collect("description")
-                      },
-                      model: {
-                        value: _vm.blog.description,
-                        callback: function($$v) {
-                          _vm.$set(_vm.blog, "description", $$v)
-                        },
-                        expression: "blog.description"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "upload-btn",
+                  "select",
+                  {
+                    directives: [
                       {
-                        attrs: { title: "Button With Icon" },
-                        on: { "file-update": _vm.update }
-                      },
-                      [
-                        _c(
-                          "template",
-                          { slot: "icon" },
-                          [_c("v-icon", [_vm._v("add")])],
-                          1
-                        )
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required",
-                          expression: "'required'"
-                        }
-                      ],
-                      attrs: {
-                        items: _vm.status,
-                        "item-text": "text",
-                        "item-value": "value",
-                        label: "Standard",
-                        name: "status",
-                        "error-messages": _vm.errors.collect("status")
-                      },
-                      model: {
+                        name: "model",
+                        rawName: "v-model",
                         value: _vm.blog.status,
-                        callback: function($$v) {
-                          _vm.$set(_vm.blog, "status", $$v)
-                        },
                         expression: "blog.status"
                       }
-                    }),
+                    ],
+                    attrs: { name: "status", placeholder: "status" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.blog,
+                          "status",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "0" } }, [
+                      _vm._v("Not Active")
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        staticClass: "mb-2",
-                        attrs: { color: "success", dark: "" },
-                        on: { click: _vm.submit }
-                      },
-                      [_vm._v("submit")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        staticClass: "mb-2",
-                        attrs: { color: "danger", dark: "" },
-                        on: { click: _vm.clear }
-                      },
-                      [_vm._v("clear")]
-                    )
-                  ],
-                  1
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("Active")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  ref: "upload",
+                  attrs: { type: "file", name: "img", placeholder: "Image" },
+                  on: { change: _vm.update }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-success", on: { click: _vm.submit } },
+                  [_vm._v("Send")]
                 )
               ])
             ],
