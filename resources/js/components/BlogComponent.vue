@@ -15,15 +15,15 @@
             </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="desserts"
+                :items="blog"
                 class="elevation-1"
             >
                 <template v-slot:items="props">
-                    <td>{{ props.item.name }}</td>
-                    <td class="text-xs-right">{{ props.item.title }}</td>
-                    <td class="text-xs-right">{{ props.item.short_text }}</td>
-                    <td class="text-xs-right">{{ props.item.img }}</td>
-                    <td class="justify-center layout px-0">
+                    <td>{{ props.item.title }}</td>
+                    <td>{{ props.item.short_text }}</td>
+                    <td >{{ props.item.status }}</td>
+                    <td class="text-xs-left">{{ props.item.img }}</td>
+                    <td class="text-xs-right layout px-0">
                         <v-icon
                             small
                             class="mr-2"
@@ -53,27 +53,25 @@
         data: () => ({
             dialog: false,
             headers: [
-                {
-                    text: 'title',
-                    align: 'left',
-                    sortable: false,
-                    value: 'title'
-                },
+                {text: 'title', align: 'left', value: 'title'},
                 { text: 'Short tex', value: 'short_text' },
+                { text: 'Status', value: 'status' },
                 { text: 'Image', value: 'img' },
                 { text: 'Actions', value: 'name', sortable: false }
             ],
-            desserts: [],
+            blog: [],
             editedIndex: -1,
             editedItem: {
                 title: '',
                 short_text: 0,
+                status: 0,
                 img: 0,
             },
             defaultItem: {
                 title: '',
                 short_text: 0,
                 img: 0,
+                status: 0,
             }
         }),
 
@@ -95,20 +93,27 @@
 
         methods: {
             initialize () {
-                this.desserts = [
-
-                ]
+               let vm = this;
+               vm.axios.get('/admin/blog').then(function(data){
+                  vm.blog = data.data;
+               }).catch(function(err){
+                   console.log(err);
+               })
             },
 
             editItem (item) {
-                this.editedIndex = this.desserts.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
+                this.$router.push({name: 'edit', params: {'id': item.id}})
             },
 
             deleteItem (item) {
-                const index = this.desserts.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+                const index = this.blog.indexOf(item)
+                confirm('Are you sure you want to delete this item?') && this.blog.splice(index, 1)
+                let vm = this;
+                vm.axios.delete('/admin/blog/' + item.id).then(function(data){
+                    console.log(data)
+                }).catch(function(err){
+                    console.log(err);
+                })
             },
 
             close () {
@@ -121,9 +126,9 @@
 
             save () {
                 if (this.editedIndex > -1) {
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                    Object.assign(this.blog[this.editedIndex], this.editedItem)
                 } else {
-                    this.desserts.push(this.editedItem)
+                    this.blog.push(this.editedItem)
                 }
                 this.close()
             }

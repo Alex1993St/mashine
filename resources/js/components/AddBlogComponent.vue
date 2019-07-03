@@ -1,9 +1,9 @@
 <template>
-        <div class="col-md-12 mt-5 animate-box">
+        <div class="col-md-12 mt-5">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                       <input type="text" name="title" class="form-control" v-model="blog.title" placeholder="Title" v-validate="'required'" data-vv-as="title">
+                       <input type="text" name="title" v-model="blog.title" class="form-control"  placeholder="Title" v-validate="'required'" data-vv-as="title">
                         <span>{{ errors.first('title') }}</span>
                     </div>
                 </div>
@@ -34,9 +34,11 @@
                     <input type="file" name="img" class="form-control" @change="update" ref="upload" placeholder="Image" v-validate="'required'" data-vv-as="img">
                     <span>{{ errors.first('img') }}</span>
                 </div>
+                <input type="hidden" name="img_old" v-model="blog.img">
                 <div class="col-md-12">
                     <button class="btn btn-success" @click="submit">Send</button>
                     <button class="btn btn-danger" @click="clear">Reset</button>
+                    <button class="btn btn-info" @click="back">Back</button>
                 </div>
             </div>
         </div>
@@ -55,9 +57,28 @@
             }
         },
 
+        created(){
+            this.init()
+        },
+
+
         methods:{
+            init(){
+                let id = this.$route.params.id;
+                if(id){
+                    let vm = this;
+                    vm.axios.get('/admin/blog/'+id+'/edit').then(function(data){
+                        vm.blog = data.data[0];
+                        console.log(vm.blog);
+                    }).catch(function(err){
+                        console.log(err);
+                    })
+                }
+            },
+
             submit(){
-               let vm = this;vm.$validator.validateAll().then(valid => {
+               let vm = this;
+               vm.$validator.validateAll().then(valid => {
                    if(valid){
                        const config = { 'content-type': 'multipart/form-data' };
                        const formData = new FormData();
@@ -89,6 +110,10 @@
                 this.blog.short_text = '';
                 this.blog.img = '';
                 this.blog.status = '';
+            },
+
+            back() {
+                this.$router.back();
             }
         },
 

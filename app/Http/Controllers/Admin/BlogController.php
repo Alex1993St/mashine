@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Blog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
 {
@@ -15,7 +16,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-
+        return Blog::all();
     }
 
     /**
@@ -80,7 +81,7 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
-        //
+        return Blog::where('id', $blog->id)->get();
     }
 
     /**
@@ -103,6 +104,18 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+
+       try{
+           $image = 'uploads/'.$blog->img;
+
+           if(File::exists($image)){
+               File::delete($image);
+           }
+
+           Blog::where('id', $blog->id)->delete();
+           return 'delete';
+       }catch(\Exception $e){
+           return 'error';
+       }
     }
 }

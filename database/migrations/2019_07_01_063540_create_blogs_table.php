@@ -16,7 +16,7 @@ class CreateBlogsTable extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 100);
-            $table->string('slug', 120);
+            $table->string('slug', 120)->uniqid();
             $table->string('short_text', 255);
             $table->text('description');
             $table->text('img');

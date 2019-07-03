@@ -1741,6 +1741,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddBlogComponent",
   data: function data() {
@@ -1755,7 +1757,23 @@ __webpack_require__.r(__webpack_exports__);
       }]
     };
   },
+  created: function created() {
+    this.init();
+  },
   methods: {
+    init: function init() {
+      var id = this.$route.params.id;
+
+      if (id) {
+        var vm = this;
+        vm.axios.get('/admin/blog/' + id + '/edit').then(function (data) {
+          vm.blog = data.data[0];
+          console.log(vm.blog);
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+    },
     submit: function submit() {
       var _this = this;
 
@@ -1790,6 +1808,9 @@ __webpack_require__.r(__webpack_exports__);
       this.blog.short_text = '';
       this.blog.img = '';
       this.blog.status = '';
+    },
+    back: function back() {
+      this.$router.back();
     }
   }
 });
@@ -1862,11 +1883,13 @@ __webpack_require__.r(__webpack_exports__);
       headers: [{
         text: 'title',
         align: 'left',
-        sortable: false,
         value: 'title'
       }, {
         text: 'Short tex',
         value: 'short_text'
+      }, {
+        text: 'Status',
+        value: 'status'
       }, {
         text: 'Image',
         value: 'img'
@@ -1875,17 +1898,19 @@ __webpack_require__.r(__webpack_exports__);
         value: 'name',
         sortable: false
       }],
-      desserts: [],
+      blog: [],
       editedIndex: -1,
       editedItem: {
         title: '',
         short_text: 0,
+        status: 0,
         img: 0
       },
       defaultItem: {
         title: '',
         short_text: 0,
-        img: 0
+        img: 0,
+        status: 0
       }
     };
   },
@@ -1904,16 +1929,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     initialize: function initialize() {
-      this.desserts = [];
+      var vm = this;
+      vm.axios.get('/admin/blog').then(function (data) {
+        vm.blog = data.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
     },
     editItem: function editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+      this.$router.push({
+        name: 'edit',
+        params: {
+          'id': item.id
+        }
+      });
     },
     deleteItem: function deleteItem(item) {
-      var index = this.desserts.indexOf(item);
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
+      var index = this.blog.indexOf(item);
+      confirm('Are you sure you want to delete this item?') && this.blog.splice(index, 1);
+      var vm = this;
+      vm.axios["delete"]('/admin/blog/' + item.id).then(function (data) {
+        console.log(data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
     },
     close: function close() {
       var _this = this;
@@ -1926,9 +1965,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        Object.assign(this.blog[this.editedIndex], this.editedItem);
       } else {
-        this.desserts.push(this.editedItem);
+        this.blog.push(this.editedItem);
       }
 
       this.close();
@@ -50961,7 +51000,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-md-12 mt-5 animate-box" }, [
+  return _c("div", { staticClass: "col-md-12 mt-5" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-6" }, [
         _c("div", { staticClass: "form-group" }, [
@@ -51156,6 +51195,27 @@ var render = function() {
         _c("span", [_vm._v(_vm._s(_vm.errors.first("img")))])
       ]),
       _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.blog.img,
+            expression: "blog.img"
+          }
+        ],
+        attrs: { type: "hidden", name: "img_old" },
+        domProps: { value: _vm.blog.img },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.blog, "img", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
       _c("div", { staticClass: "col-md-12" }, [
         _c(
           "button",
@@ -51167,7 +51227,11 @@ var render = function() {
           "button",
           { staticClass: "btn btn-danger", on: { click: _vm.clear } },
           [_vm._v("Reset")]
-        )
+        ),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-info", on: { click: _vm.back } }, [
+          _vm._v("Back")
+        ])
       ])
     ])
   ])
@@ -51232,29 +51296,25 @@ var render = function() {
         _vm._v(" "),
         _c("v-data-table", {
           staticClass: "elevation-1",
-          attrs: { headers: _vm.headers, items: _vm.desserts },
+          attrs: { headers: _vm.headers, items: _vm.blog },
           scopedSlots: _vm._u([
             {
               key: "items",
               fn: function(props) {
                 return [
-                  _c("td", [_vm._v(_vm._s(props.item.name))]),
+                  _c("td", [_vm._v(_vm._s(props.item.title))]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.title))
-                  ]),
+                  _c("td", [_vm._v(_vm._s(props.item.short_text))]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.short_text))
-                  ]),
+                  _c("td", [_vm._v(_vm._s(props.item.status))]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
+                  _c("td", { staticClass: "text-xs-left" }, [
                     _vm._v(_vm._s(props.item.img))
                   ]),
                   _vm._v(" "),
                   _c(
                     "td",
-                    { staticClass: "justify-center layout px-0" },
+                    { staticClass: "text-xs-right layout px-0" },
                     [
                       _c(
                         "v-icon",
@@ -92669,6 +92729,11 @@ var routes = [{
   component: _components_BlogComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/add_blog',
+  name: 'add',
+  component: _components_AddBlogComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
+}, {
+  path: '/add_blog/:id',
+  name: 'edit',
   component: _components_AddBlogComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
 }];
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
