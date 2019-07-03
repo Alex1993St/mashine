@@ -38,21 +38,27 @@ class BlogController extends Controller
     {
         $data = $request->all();
 
-        $getImage = $request->img;
+        try{
+            $getImage = $request->img;
 
-        $image = $getImage->getClientOriginalName();
+            $image = $getImage->getClientOriginalName();
 
-        $getImage->move('uploads/', $image);
+            $getImage->move('uploads/', $image);
 
-        $arr = [
-            'title' =>  $data['title'],
-            'slug' => Blog::createSlug($data['title']),
-            'description' =>  $data['description'],
-            'img' =>  $image,
-            'short_text' =>  $data['short_text'],
-        ];
+            $arr = [
+                'title' =>  $data['title'],
+                'slug' => Blog::createSlug($data['title']),
+                'description' =>  $data['description'],
+                'img' =>  $image,
+                'short_text' =>  $data['short_text'],
+            ];
 
-        Blog::create($arr);
+            Blog::create($arr);
+            return 'save';
+        }catch (\Exception $e){
+            return 'error';
+        }
+
     }
 
     /**

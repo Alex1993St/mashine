@@ -1,26 +1,48 @@
 <template>
-    <v-app id="inspire">
-        <v-container fluid grid-list-xl>
-            <v-layout wrap align-center>
-                <v-flex xs12 sm12 d-flex>
-                    <input type="text" name="title" v-model="blog.title" placeholder="Title">
-                    <input type="text" name="short_text" v-model="blog.short_text" placeholder="Short text">
-                    <input type="text" name="description" v-model="blog.description" placeholder="Description">
-                    <select name="status" v-model="blog.status" placeholder="status">
-                        <option value="0">Not Active</option>
-                        <option value="1">Active</option>
-                    </select>
-                    <input type="file" name="img" @change="update" ref="upload" placeholder="Image">
+        <div class="col-md-12 mt-5 animate-box">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                       <input type="text" name="title" class="form-control" v-model="blog.title" placeholder="Title" v-validate="'required'" data-vv-as="title">
+                        <span>{{ errors.first('title') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                         <input type="text" name="short_text" class="form-control" v-model="blog.short_text" placeholder="Short text" v-validate="'required'" data-vv-as="short_text">
+                        <span>{{ errors.first('short_text') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="text" name="description" class="form-control" v-model="blog.description" placeholder="Description" v-validate="'required'" data-vv-as="description">
+                        <span>{{ errors.first('description') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        Select status
+                        <select name="status" class="form-control" v-model="blog.status" v-validate="'required'" data-vv-as="status">
+                            <option value="0">Not Active</option>
+                            <option value="1">Active</option>
+                        </select>
+                        <span>{{ errors.first('status') }}</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    Select Image
+                    <input type="file" name="img" class="form-control" @change="update" ref="upload" placeholder="Image" v-validate="'required'" data-vv-as="img">
+                    <span>{{ errors.first('img') }}</span>
+                </div>
+                <div class="col-md-12">
                     <button class="btn btn-success" @click="submit">Send</button>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </v-app>
+                    <button class="btn btn-danger" @click="clear">Reset</button>
+                </div>
+            </div>
+        </div>
 </template>
 
 <script>
-    import UploadButton from 'vuetify-upload-button';
-
     export default {
         name: "AddBlogComponent",
         data() {
@@ -33,24 +55,21 @@
             }
         },
 
-        components: {
-            'upload-btn': UploadButton
-        },
-
         methods:{
             submit(){
                let vm = this;vm.$validator.validateAll().then(valid => {
-                    const config = { 'content-type': 'multipart/form-data' };
-                    const formData = new FormData();
-                    formData.append('title', this.blog.title);
-                    formData.append('short_text', this.blog.short_text);
-                    formData.append('description', this.blog.description);
-                    formData.append('status', this.blog.status);
-                    formData.append('img', this.blog.img);
                    if(valid){
+                       const config = { 'content-type': 'multipart/form-data' };
+                       const formData = new FormData();
+                       formData.append('title', this.blog.title);
+                       formData.append('short_text', this.blog.short_text);
+                       formData.append('description', this.blog.description);
+                       formData.append('status', this.blog.status);
+                       formData.append('img', this.blog.img);
+
                       vm.axios.post('/admin/blog',formData, config
                       ).then(function(data){
-                          console.log(data);
+                            vm.clear();
                       }).catch(function(err){
                           console.log(err);
                       })
@@ -65,7 +84,6 @@
             },
 
             clear () {
-                this.$refs.form.reset();
                 this.blog.title = '';
                 this.blog.description = '';
                 this.blog.short_text = '';

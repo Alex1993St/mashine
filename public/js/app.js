@@ -1697,8 +1697,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuetify_upload_button__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuetify-upload-button */ "./node_modules/vuetify-upload-button/dist/vuetify-upload-button.js");
-/* harmony import */ var vuetify_upload_button__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuetify_upload_button__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1719,7 +1717,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddBlogComponent",
   data: function data() {
@@ -1734,28 +1755,24 @@ __webpack_require__.r(__webpack_exports__);
       }]
     };
   },
-  components: {
-    'upload-btn': vuetify_upload_button__WEBPACK_IMPORTED_MODULE_0___default.a
-  },
   methods: {
     submit: function submit() {
       var _this = this;
 
       var vm = this;
       vm.$validator.validateAll().then(function (valid) {
-        var config = {
-          'content-type': 'multipart/form-data'
-        };
-        var formData = new FormData();
-        formData.append('title', _this.blog.title);
-        formData.append('short_text', _this.blog.short_text);
-        formData.append('description', _this.blog.description);
-        formData.append('status', _this.blog.status);
-        formData.append('img', _this.blog.img);
-
         if (valid) {
+          var config = {
+            'content-type': 'multipart/form-data'
+          };
+          var formData = new FormData();
+          formData.append('title', _this.blog.title);
+          formData.append('short_text', _this.blog.short_text);
+          formData.append('description', _this.blog.description);
+          formData.append('status', _this.blog.status);
+          formData.append('img', _this.blog.img);
           vm.axios.post('/admin/blog', formData, config).then(function (data) {
-            console.log(data);
+            vm.clear();
           })["catch"](function (err) {
             console.log(err);
           });
@@ -1768,7 +1785,6 @@ __webpack_require__.r(__webpack_exports__);
       this.blog.img = this.$refs.upload.files[0];
     },
     clear: function clear() {
-      this.$refs.form.reset();
       this.blog.title = '';
       this.blog.description = '';
       this.blog.short_text = '';
@@ -50945,152 +50961,216 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    { attrs: { id: "inspire" } },
-    [
-      _c(
-        "v-container",
-        { attrs: { fluid: "", "grid-list-xl": "" } },
-        [
-          _c(
-            "v-layout",
-            { attrs: { wrap: "", "align-center": "" } },
-            [
-              _c("v-flex", { attrs: { xs12: "", sm12: "", "d-flex": "" } }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.blog.title,
-                      expression: "blog.title"
-                    }
-                  ],
-                  attrs: { type: "text", name: "title", placeholder: "Title" },
-                  domProps: { value: _vm.blog.title },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.blog, "title", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.blog.short_text,
-                      expression: "blog.short_text"
-                    }
-                  ],
-                  attrs: {
-                    type: "text",
-                    name: "short_text",
-                    placeholder: "Short text"
-                  },
-                  domProps: { value: _vm.blog.short_text },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.blog, "short_text", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.blog.description,
-                      expression: "blog.description"
-                    }
-                  ],
-                  attrs: {
-                    type: "text",
-                    name: "description",
-                    placeholder: "Description"
-                  },
-                  domProps: { value: _vm.blog.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.blog, "description", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.blog.status,
-                        expression: "blog.status"
-                      }
-                    ],
-                    attrs: { name: "status", placeholder: "status" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.blog,
-                          "status",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "0" } }, [
-                      _vm._v("Not Active")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("Active")])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  ref: "upload",
-                  attrs: { type: "file", name: "img", placeholder: "Image" },
-                  on: { change: _vm.update }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-success", on: { click: _vm.submit } },
-                  [_vm._v("Send")]
-                )
-              ])
+  return _c("div", { staticClass: "col-md-12 mt-5 animate-box" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.blog.title,
+                expression: "blog.title"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required",
+                expression: "'required'"
+              }
             ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "title",
+              placeholder: "Title",
+              "data-vv-as": "title"
+            },
+            domProps: { value: _vm.blog.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.blog, "title", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.errors.first("title")))])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.blog.short_text,
+                expression: "blog.short_text"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required",
+                expression: "'required'"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "short_text",
+              placeholder: "Short text",
+              "data-vv-as": "short_text"
+            },
+            domProps: { value: _vm.blog.short_text },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.blog, "short_text", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.errors.first("short_text")))])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.blog.description,
+                expression: "blog.description"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required",
+                expression: "'required'"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "description",
+              placeholder: "Description",
+              "data-vv-as": "description"
+            },
+            domProps: { value: _vm.blog.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.blog, "description", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.errors.first("description")))])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _vm._v("\n                Select status\n                "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.blog.status,
+                  expression: "blog.status"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required",
+                  expression: "'required'"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { name: "status", "data-vv-as": "status" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.blog,
+                    "status",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "0" } }, [_vm._v("Not Active")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "1" } }, [_vm._v("Active")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.errors.first("status")))])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _vm._v("\n            Select Image\n            "),
+        _c("input", {
+          directives: [
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required",
+              expression: "'required'"
+            }
+          ],
+          ref: "upload",
+          staticClass: "form-control",
+          attrs: {
+            type: "file",
+            name: "img",
+            placeholder: "Image",
+            "data-vv-as": "img"
+          },
+          on: { change: _vm.update }
+        }),
+        _vm._v(" "),
+        _c("span", [_vm._v(_vm._s(_vm.errors.first("img")))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-success", on: { click: _vm.submit } },
+          [_vm._v("Send")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-danger", on: { click: _vm.clear } },
+          [_vm._v("Reset")]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66156,17 +66236,6 @@ if (false) {} else {
   module.exports = __webpack_require__(/*! ./vue.common.dev.js */ "./node_modules/vue/dist/vue.common.dev.js")
 }
 
-
-/***/ }),
-
-/***/ "./node_modules/vuetify-upload-button/dist/vuetify-upload-button.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/vuetify-upload-button/dist/vuetify-upload-button.js ***!
-  \**************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-!function(e,t){ true?module.exports=t():undefined}(this,function(){return function(e){function t(i){if(n[i])return n[i].exports;var a=n[i]={exports:{},id:i,loaded:!1};return e[i].call(a.exports,a,a.exports,t),a.loaded=!0,a.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){n(1);var i=n(6)(n(7),n(8),"data-v-26f644c0",null);e.exports=i.exports},function(e,t,n){var i=n(2);"string"==typeof i&&(i=[[e.id,i,""]]),i.locals&&(e.exports=i.locals);n(4)("9bbb4e68",i,!0)},function(e,t,n){t=e.exports=n(3)(!1),t.push([e.id,".upload-btn[data-v-26f644c0]{padding-left:16px;padding-right:16px}.upload-btn input[type=file][data-v-26f644c0]{position:absolute;height:.1px;width:.1px;overflow:hidden;opacity:0;z-index:-1}.upload-btn>.v-btn__content>span[data-v-26f644c0]{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.upload-btn-hover[data-v-26f644c0]{cursor:pointer}",""])},function(e,t){function n(e,t){var n=e[1]||"",a=e[3];if(!a)return n;if(t&&"function"==typeof btoa){var o=i(a),r=a.sources.map(function(e){return"/*# sourceURL="+a.sourceRoot+e+" */"});return[n].concat(r).concat([o]).join("\n")}return[n].join("\n")}function i(e){var t=btoa(unescape(encodeURIComponent(JSON.stringify(e)))),n="sourceMappingURL=data:application/json;charset=utf-8;base64,"+t;return"/*# "+n+" */"}e.exports=function(e){var t=[];return t.toString=function(){return this.map(function(t){var i=n(t,e);return t[2]?"@media "+t[2]+"{"+i+"}":i}).join("")},t.i=function(e,n){"string"==typeof e&&(e=[[null,e,""]]);for(var i={},a=0;a<this.length;a++){var o=this[a][0];"number"==typeof o&&(i[o]=!0)}for(a=0;a<e.length;a++){var r=e[a];"number"==typeof r[0]&&i[r[0]]||(n&&!r[2]?r[2]=n:n&&(r[2]="("+r[2]+") and ("+n+")"),t.push(r))}},t}},function(e,t,n){function i(e){for(var t=0;t<e.length;t++){var n=e[t],i=d[n.id];if(i){i.refs++;for(var a=0;a<i.parts.length;a++)i.parts[a](n.parts[a]);for(;a<n.parts.length;a++)i.parts.push(o(n.parts[a]));i.parts.length>n.parts.length&&(i.parts.length=n.parts.length)}else{for(var r=[],a=0;a<n.parts.length;a++)r.push(o(n.parts[a]));d[n.id]={id:n.id,refs:1,parts:r}}}}function a(){var e=document.createElement("style");return e.type="text/css",p.appendChild(e),e}function o(e){var t,n,i=document.querySelector('style[data-vue-ssr-id~="'+e.id+'"]');if(i){if(h)return v;i.parentNode.removeChild(i)}if(m){var o=c++;i=f||(f=a()),t=r.bind(null,i,o,!1),n=r.bind(null,i,o,!0)}else i=a(),t=l.bind(null,i),n=function(){i.parentNode.removeChild(i)};return t(e),function(i){if(i){if(i.css===e.css&&i.media===e.media&&i.sourceMap===e.sourceMap)return;t(e=i)}else n()}}function r(e,t,n,i){var a=n?"":i.css;if(e.styleSheet)e.styleSheet.cssText=b(t,a);else{var o=document.createTextNode(a),r=e.childNodes;r[t]&&e.removeChild(r[t]),r.length?e.insertBefore(o,r[t]):e.appendChild(o)}}function l(e,t){var n=t.css,i=t.media,a=t.sourceMap;if(i&&e.setAttribute("media",i),a&&(n+="\n/*# sourceURL="+a.sources[0]+" */",n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(a))))+" */"),e.styleSheet)e.styleSheet.cssText=n;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(n))}}var s="undefined"!=typeof document,u=n(5),d={},p=s&&(document.head||document.getElementsByTagName("head")[0]),f=null,c=0,h=!1,v=function(){},m="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());e.exports=function(e,t,n){h=n;var a=u(e,t);return i(a),function(t){for(var n=[],o=0;o<a.length;o++){var r=a[o],l=d[r.id];l.refs--,n.push(l)}t?(a=u(e,t),i(a)):a=[];for(var o=0;o<n.length;o++){var l=n[o];if(0===l.refs){for(var s=0;s<l.parts.length;s++)l.parts[s]();delete d[l.id]}}}};var b=function(){var e=[];return function(t,n){return e[t]=n,e.filter(Boolean).join("\n")}}()},function(e,t){e.exports=function(e,t){for(var n=[],i={},a=0;a<t.length;a++){var o=t[a],r=o[0],l=o[1],s=o[2],u=o[3],d={id:e+":"+a,css:l,media:s,sourceMap:u};i[r]?i[r].parts.push(d):n.push(i[r]={id:r,parts:[d]})}return n}},function(e,t){e.exports=function(e,t,n,i){var a,o=e=e||{},r=typeof e["default"];"object"!==r&&"function"!==r||(a=e,o=e["default"]);var l="function"==typeof o?o.options:o;if(t&&(l.render=t.render,l.staticRenderFns=t.staticRenderFns),n&&(l._scopeId=n),i){var s=Object.create(l.computed||null);Object.keys(i).forEach(function(e){var t=i[e];s[e]=function(){return t}}),l.computed=s}return{esModule:a,exports:o,options:l}}},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t["default"]={name:"UploadBtn",props:{accept:{"default":"*",type:String},block:{"default":!1,type:Boolean},depressed:{"default":!1,type:Boolean},color:{"default":"primary",type:String},disabled:{"default":!1,type:Boolean},fixedWidth:{"default":null,type:String},flat:{"default":!1,type:Boolean},hover:{"default":!0,type:Boolean},icon:{"default":!1,type:Boolean},labelClass:{"default":"",type:String},large:{"default":!1,type:Boolean},loading:{"default":!1,type:Boolean},maxWidth:{"default":"100%",type:String},multiple:{"default":!1,type:Boolean},name:{"default":"uploadFile",type:String},outline:{"default":!1,type:Boolean},ripple:{"default":!0,type:Boolean},round:{"default":!1,type:Boolean},small:{"default":!1,type:Boolean},title:{"default":"Upload",type:String},noTitleUpdate:{"default":!1,type:Boolean}},data:function(){return{uTitle:null}},computed:{classes:function n(){var n={"v-btn--block":this.block,"v-btn--flat":this.flat,"upload-btn-hover":this.hover,"v-btn--icon":this.icon,"v-btn--large":this.large,"v-btn--loading":this.loading,"v-btn--outline v-btn--depressed":this.outline,"v-btn--round":this.round,"v-btn--small":this.small,"v-btn--disabled":this.disabled,"v-btn--depressed":this.depressed};this.flat&&(this.color="");var e="";for(var t in n)n[t]&&(e+=t+" ");return e}},methods:{fileChanged:function(e){if(e)if(e.target.files.length>0)if(this.multiple){for(var t="",n=0;n<e.target.files.length;n++)t+=e.target.files[n].name+", ";t=t.slice(0,t.length-2),this.uTitle=t,this.$emit("file-update",e.target.files)}else this.uTitle=e.target.files[0].name,this.$emit("file-update",e.target.files[0]);else this.uTitle=null,this.$emit("file-update")},clear:function(){this.$refs.uploadFile.value="",this.$emit("file-update"),this.uTitle=null}}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",{staticClass:"upload-btn"},[n("input",{ref:"uploadFile",attrs:{id:e._uid+"uploadFile",type:"file",name:e.name,accept:e.accept,multiple:e.multiple},on:{change:e.fileChanged}}),e._v(" "),n("label",{directives:[{name:"ripple",rawName:"v-ripple",value:e.ripple,expression:"ripple"}],"class":"v-btn "+e.classes+e.color+" "+e.labelClass+" upload-btn",style:{maxWidth:e.maxWidth,width:e.fixedWidth||"auto"},attrs:{id:"label"+(e._uid+"uploadFile"),"for":e._uid+"uploadFile"}},[n("div",{staticClass:"v-btn__content",staticStyle:{"max-width":"100%"}},[e._t("icon-left"),e._v(" "),n("span",[e._v("\n        "+e._s(e.icon?"":e.noTitleUpdate?e.title:e.uTitle||e.title)+"\n      ")]),e._v(" "),e._t("icon")],2)])])},staticRenderFns:[]}}])});
 
 /***/ }),
 
