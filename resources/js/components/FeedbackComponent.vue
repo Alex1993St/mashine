@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="tab-content">
+            <div class="tab-pane active container" id="home">
+                <router-link :to="{name: 'dashboard'}">Dashboard</router-link>
+            </div>
+        </div>
         <table class="table table-striped table-hover">
             <thead>
             <tr>

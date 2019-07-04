@@ -1880,6 +1880,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Blog",
   data: function data() {
@@ -2038,6 +2041,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51303,130 +51311,134 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-app", { attrs: { id: "inspire" } }, [
-    _c(
-      "div",
-      [
-        _c("router-link", { attrs: { to: { name: "feedback" } } }, [
-          _vm._v("Feedback")
-        ]),
-        _vm._v(" "),
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "tab-content" }, [
         _c(
-          "v-toolbar",
-          { attrs: { flat: "", color: "white" } },
+          "div",
+          { staticClass: "tab-pane active container", attrs: { id: "home" } },
           [
-            _c("v-toolbar-title", [_vm._v("My CRUD")]),
-            _vm._v(" "),
-            _c("v-divider", {
-              staticClass: "mx-2",
-              attrs: { inset: "", vertical: "" }
-            }),
-            _vm._v(" "),
-            _c("v-spacer"),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              { attrs: { to: "/add_blog" } },
-              [
+            _c("router-link", { attrs: { to: { name: "feedback" } } }, [
+              _vm._v("Feedback")
+            ])
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "v-toolbar",
+        { attrs: { flat: "", color: "white" } },
+        [
+          _c("v-toolbar-title", [_vm._v("My CRUD")]),
+          _vm._v(" "),
+          _c("v-divider", {
+            staticClass: "mx-2",
+            attrs: { inset: "", vertical: "" }
+          }),
+          _vm._v(" "),
+          _c("v-spacer"),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { attrs: { to: "/add_blog" } },
+            [
+              _c(
+                "v-btn",
+                { staticClass: "mb-2", attrs: { color: "primary", dark: "" } },
+                [_vm._v("New Item")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: { headers: _vm.headers, items: _vm.blog },
+        scopedSlots: _vm._u([
+          {
+            key: "items",
+            fn: function(props) {
+              return [
+                _c("td", [_vm._v(_vm._s(props.item.title))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.short_text))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(props.item.status))]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-xs-left image" }, [
+                  _c("img", { attrs: { src: "/uploads/" + props.item.img } })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "text-xs-right layout px-0" },
+                  [
+                    _c(
+                      "v-icon",
+                      {
+                        staticClass: "mr-2",
+                        attrs: { small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.editItem(props.item)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        edit\n                    "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-icon",
+                      {
+                        attrs: { small: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteItem(props.item)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        delete\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          },
+          {
+            key: "no-data",
+            fn: function() {
+              return [
                 _c(
                   "v-btn",
                   {
-                    staticClass: "mb-2",
-                    attrs: { color: "primary", dark: "" }
+                    attrs: { color: "primary" },
+                    on: { click: _vm.initialize }
                   },
-                  [_vm._v("New Item")]
+                  [_vm._v("Reset")]
                 )
-              ],
-              1
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("v-data-table", {
-          staticClass: "elevation-1",
-          attrs: { headers: _vm.headers, items: _vm.blog },
-          scopedSlots: _vm._u([
-            {
-              key: "items",
-              fn: function(props) {
-                return [
-                  _c("td", [_vm._v(_vm._s(props.item.title))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(props.item.short_text))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(props.item.status))]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-left image" }, [
-                    _c("img", { attrs: { src: "/uploads/" + props.item.img } })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    { staticClass: "text-xs-right layout px-0" },
-                    [
-                      _c(
-                        "v-icon",
-                        {
-                          staticClass: "mr-2",
-                          attrs: { small: "" },
-                          on: {
-                            click: function($event) {
-                              return _vm.editItem(props.item)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        edit\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-icon",
-                        {
-                          attrs: { small: "" },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteItem(props.item)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        delete\n                    "
-                          )
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                ]
-              }
+              ]
             },
-            {
-              key: "no-data",
-              fn: function() {
-                return [
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "primary" },
-                      on: { click: _vm.initialize }
-                    },
-                    [_vm._v("Reset")]
-                  )
-                ]
-              },
-              proxy: true
-            }
-          ])
-        })
-      ],
-      1
-    )
-  ])
+            proxy: true
+          }
+        ])
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -51631,6 +51643,19 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { staticClass: "tab-content" }, [
+      _c(
+        "div",
+        { staticClass: "tab-pane active container", attrs: { id: "home" } },
+        [
+          _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
+            _vm._v("Dashboard")
+          ])
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
     _c("table", { staticClass: "table table-striped table-hover" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -92942,6 +92967,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 var routes = [{
   path: '/',
+  name: 'dashboard',
   component: _components_BlogComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/add_blog',

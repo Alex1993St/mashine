@@ -168,12 +168,12 @@
 		</div>
 
 		<div id="fh5co-blog" class="blog-flex">
-			<div class="featured-blog" style="background-image: url(images/blog-1.jpg);">
+			<div class="featured-blog" style="background-image: url(/uploads/{{ $main_blog['img'] }});">
 				<div class="desc-t">
 					<div class="desc-tc">
-						<span class="featured-head">Featured Posts</span>
-						<h3><a href="#">Top 20 Best WordPress Themes 2017 Multi Purpose and Creative Websites</a></h3>
-						<span><a href="#" class="read-button">Learn More</a></span>
+						<span class="featured-head">{{ $main_blog['title'] }}</span>
+						<h3><a href="#">{{ $main_blog['short_text'] }}</a></h3>
+						<span><a href="{{ route('more', ['slug' => $main_blog['slug']]) }}" class="read-button">Learn More</a></span>
 					</div>
 				</div>
 			</div>
@@ -184,33 +184,17 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12 animate-box">
-						<a href="#" class="blog-post">
-							<span class="img" style="background-image: url(images/blog-2.jpg);"></span>
-							<div class="desc">
-								<h3>26 Best Education WordPress Themes 2017 You Need To See</h3>
-								<span class="cat">Collection</span>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-12 animate-box">
-						<a href="#" class="blog-post">
-							<span class="img" style="background-image: url(images/blog-1.jpg);"></span>
-							<div class="desc">
-								<h3>16 Outstanding Photography WordPress Themes You Must See</h3>
-								<span class="cat">Collection</span>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-12 animate-box">
-						<a href="#" class="blog-post">
-							<span class="img" style="background-image: url(images/blog-3.jpg);"></span>
-							<div class="desc">
-								<h3>16 Outstanding Photography WordPress Themes You Must See</h3>
-								<span class="cat">Collection</span>
-							</div>
-						</a>
-					</div>
+                    @foreach($blog as $item)
+                        <div class="col-md-12 animate-box">
+                            <a href="{{ route('more', ['slug' => $item['slug']]) }}" class="blog-post">
+                                <span class="img" style="background-image: url(/uploads/{{ $item['img']  }});"></span>
+                                <div class="desc">
+                                    <h3>{{ $item['title']  }}</h3>
+                                    <span class="cat">More</span>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
 				</div>
 			</div>
 		</div>

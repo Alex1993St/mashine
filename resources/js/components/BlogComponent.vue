@@ -1,7 +1,11 @@
 <template>
-    <v-app id="inspire">
-        <div>
-            <router-link :to="{name: 'feedback'}">Feedback</router-link>
+    <div>
+            <div class="tab-content">
+                <div class="tab-pane active container" id="home">
+                    <router-link :to="{name: 'feedback'}">Feedback</router-link>
+                </div>
+            </div>
+
             <v-toolbar flat color="white">
                  <v-toolbar-title>My CRUD</v-toolbar-title>
                 <v-divider
@@ -44,8 +48,7 @@
                     <v-btn color="primary" @click="initialize">Reset</v-btn>
                 </template>
             </v-data-table>
-        </div>
-    </v-app>
+    </div>
 </template>
 
 <script>

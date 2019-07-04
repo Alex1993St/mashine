@@ -24,7 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('front/index');
+        $blog = Blog::orderBy('updated_at', 'desc')->limit(4)->get()->toArray();
+        $main_blog = array_shift($blog);
+
+        return view('front/index')->with(['main_blog' => $main_blog, 'blog' => $blog]);
     }
 
     /**

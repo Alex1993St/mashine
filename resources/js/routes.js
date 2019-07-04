@@ -10,7 +10,7 @@ import Feedback from './components/FeedbackComponent';
 
 const routes = [
     {
-        path: '/', component: Blog
+        path: '/', name: 'dashboard', component: Blog
     },{
         path: '/add_blog', name: 'add', component: Add_Blog
     }, {
