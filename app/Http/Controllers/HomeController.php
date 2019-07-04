@@ -42,6 +42,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function more($slug)
+    {
+
+        return view('front.more', ['blog' => Blog::where('slug', $slug)->get()->toArray()]);
+
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function blog()
     {
         return view('front.blog', ['blog' => Blog::all()]);

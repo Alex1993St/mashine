@@ -19,3 +19,4 @@ Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/blog', 'HomeController@blog')->name('blog');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/work', 'HomeController@work')->name('work');
+Route::get('/more/{slug}', 'HomeController@more')->name('more');

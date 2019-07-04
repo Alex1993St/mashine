@@ -25,10 +25,10 @@
                 @forelse ($blog as $item)
 				<div class="col-md-4">
 					<div class="fh5co-blog animate-box">
-						<a href="#" class="blog-bg" style="background-image: url(uploads/{{ $item->img }});"></a>
+						<a href="{{ route('more', ['id' => $item->slug]) }}" class="blog-bg" style="background-image: url(uploads/{{ $item->img }});"></a>
 						<div class="blog-text">
 							<span class="posted_on">{{ $item->updated_at }}</span>
-							<h3><a href="#">{{ $item->title }}</a></h3>
+							<h3><a href="{{ route('more', ['id' => $item->slug]) }}">{{ $item->title }}</a></h3>
 							<p>{{ $item->short_text }}</p>
 						</div>
 					</div>
