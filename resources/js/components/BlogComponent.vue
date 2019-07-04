@@ -22,7 +22,7 @@
                     <td>{{ props.item.title }}</td>
                     <td>{{ props.item.short_text }}</td>
                     <td >{{ props.item.status }}</td>
-                    <td class="text-xs-left">{{ props.item.img }}</td>
+                    <td class="text-xs-left image"><img :src = "'/uploads/' + props.item.img"></td>
                     <td class="text-xs-right layout px-0">
                         <v-icon
                             small
@@ -51,7 +51,6 @@
     export default {
         name: "Blog",
         data: () => ({
-            dialog: false,
             headers: [
                 {text: 'title', align: 'left', value: 'title'},
                 { text: 'Short tex', value: 'short_text' },
@@ -60,32 +59,8 @@
                 { text: 'Actions', value: 'name', sortable: false }
             ],
             blog: [],
-            editedIndex: -1,
-            editedItem: {
-                title: '',
-                short_text: 0,
-                status: 0,
-                img: 0,
-            },
-            defaultItem: {
-                title: '',
-                short_text: 0,
-                img: 0,
-                status: 0,
-            }
         }),
 
-        computed: {
-            formTitle () {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-            }
-        },
-
-        watch: {
-            dialog (val) {
-                val || this.close()
-            }
-        },
 
         created () {
             this.initialize()
@@ -93,16 +68,16 @@
 
         methods: {
             initialize () {
-               let vm = this;
-               vm.axios.get('/admin/blog').then(function(data){
-                  vm.blog = data.data;
-               }).catch(function(err){
-                   console.log(err);
-               })
+                let vm = this;
+                vm.axios.get('/admin/blog').then(function(data){
+                    vm.blog = data.data;
+                }).catch(function(err){
+                    console.log(err);
+                })
             },
 
-            editItem (item) {
-                this.$router.push({name: 'edit', params: {'id': item.id}})
+            editItem(item){
+                this.$router.push({ name: 'edit', params: {'id': item.id}})
             },
 
             deleteItem (item) {
@@ -116,22 +91,6 @@
                 })
             },
 
-            close () {
-                this.dialog = false
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
-            },
-
-            save () {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.blog[this.editedIndex], this.editedItem)
-                } else {
-                    this.blog.push(this.editedItem)
-                }
-                this.close()
-            }
         }
     }
 </script>
@@ -143,5 +102,9 @@
 
     .application--wrap{
         min-height: 0px!important;
+    }
+
+    .image img{
+        max-width: 150px;
     }
 </style>

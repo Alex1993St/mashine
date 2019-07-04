@@ -1743,6 +1743,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddBlogComponent",
   data: function data() {
@@ -1778,6 +1779,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var vm = this;
+      var id_blog = this.$route.params.id;
       vm.$validator.validateAll().then(function (valid) {
         if (valid) {
           var config = {
@@ -1789,8 +1791,10 @@ __webpack_require__.r(__webpack_exports__);
           formData.append('description', _this.blog.description);
           formData.append('status', _this.blog.status);
           formData.append('img', _this.blog.img);
-          vm.axios.post('/admin/blog', formData, config).then(function (data) {
-            vm.clear();
+          formData.append('img_old', _this.blog.img);
+          formData.append('id_blog', id_blog);
+          vm.axios.post('/admin/blog', formData, config).then(function () {
+            vm.$router.back();
           })["catch"](function (err) {
             console.log(err);
           });
@@ -1879,7 +1883,6 @@ __webpack_require__.r(__webpack_exports__);
   name: "Blog",
   data: function data() {
     return {
-      dialog: false,
       headers: [{
         text: 'title',
         align: 'left',
@@ -1898,31 +1901,8 @@ __webpack_require__.r(__webpack_exports__);
         value: 'name',
         sortable: false
       }],
-      blog: [],
-      editedIndex: -1,
-      editedItem: {
-        title: '',
-        short_text: 0,
-        status: 0,
-        img: 0
-      },
-      defaultItem: {
-        title: '',
-        short_text: 0,
-        img: 0,
-        status: 0
-      }
+      blog: []
     };
-  },
-  computed: {
-    formTitle: function formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
-    }
-  },
-  watch: {
-    dialog: function dialog(val) {
-      val || this.close();
-    }
   },
   created: function created() {
     this.initialize();
@@ -1953,24 +1933,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
-    },
-    close: function close() {
-      var _this = this;
-
-      this.dialog = false;
-      setTimeout(function () {
-        _this.editedItem = Object.assign({}, _this.defaultItem);
-        _this.editedIndex = -1;
-      }, 300);
-    },
-    save: function save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.blog[this.editedIndex], this.editedItem);
-      } else {
-        this.blog.push(this.editedItem);
-      }
-
-      this.close();
     }
   }
 });
@@ -6494,7 +6456,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-66ef69a0]{\n    width: 100%!important;\n}\n.application--wrap[data-v-66ef69a0]{\n    min-height: 0px!important;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-66ef69a0]{\n    width: 100%!important;\n}\n.application--wrap[data-v-66ef69a0]{\n    min-height: 0px!important;\n}\n.image img[data-v-66ef69a0]{\n    max-width: 150px;\n}\n", ""]);
 
 // exports
 
@@ -51172,27 +51134,13 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6" }, [
         _vm._v("\n            Select Image\n            "),
+        _vm._v(" "),
         _c("input", {
-          directives: [
-            {
-              name: "validate",
-              rawName: "v-validate",
-              value: "required",
-              expression: "'required'"
-            }
-          ],
           ref: "upload",
           staticClass: "form-control",
-          attrs: {
-            type: "file",
-            name: "img",
-            placeholder: "Image",
-            "data-vv-as": "img"
-          },
+          attrs: { type: "file", name: "img", placeholder: "Image" },
           on: { change: _vm.update }
-        }),
-        _vm._v(" "),
-        _c("span", [_vm._v(_vm._s(_vm.errors.first("img")))])
+        })
       ]),
       _vm._v(" "),
       _c("input", {
@@ -51308,8 +51256,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(props.item.status))]),
                   _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-left" }, [
-                    _vm._v(_vm._s(props.item.img))
+                  _c("td", { staticClass: "text-xs-left image" }, [
+                    _c("img", { attrs: { src: "/uploads/" + props.item.img } })
                   ]),
                   _vm._v(" "),
                   _c(

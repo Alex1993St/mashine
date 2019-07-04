@@ -24,9 +24,27 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($data, $getImage)
     {
-        //
+
+        try{
+            $image = $getImage->getClientOriginalName();
+            $time = date('H-i-s');
+            $getImage->move('uploads/', $time.$image);
+
+            $arr = [
+                'title' =>  $data['title'],
+                'slug' => Blog::createSlug($data['title']),
+                'description' =>  $data['description'],
+                'img' =>  $time.$image,
+                'short_text' =>  $data['short_text'],
+            ];
+
+            Blog::create($arr);
+            return 'save';
+        }catch (\Exception $e){
+            return 'error';
+       }
     }
 
     /**
@@ -37,27 +55,11 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        try{
-            $getImage = $request->img;
-
-            $image = $getImage->getClientOriginalName();
-
-            $getImage->move('uploads/', $image);
-
-            $arr = [
-                'title' =>  $data['title'],
-                'slug' => Blog::createSlug($data['title']),
-                'description' =>  $data['description'],
-                'img' =>  $image,
-                'short_text' =>  $data['short_text'],
-            ];
-
-            Blog::create($arr);
-            return 'save';
-        }catch (\Exception $e){
-            return 'error';
+        $route = $request->all('id_blog');
+        if($route['id_blog'] != 'undefined'){
+            return $this->update($request->all(), $request->img);
+        }else{
+            return $this->create($request->all(), $request->img);
         }
 
     }
@@ -91,9 +93,32 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update($data, $getImage)
     {
-        //
+        try{
+            $update = [
+                'title' => $data['title'],
+                'slug' => Blog::createSlug($data['title']),
+                'short_text' => $data['short_text'],
+                'description' => $data['description'],
+                'status' => $data['status'],
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            if($data['img'] != $data['img_old']){
+                File::delete('uploads/' . $data['img_old']);
+                $image = $getImage->getClientOriginalName();
+                $time = date('H-i-s');
+                $getImage->move('uploads/', $time.$image);
+                $update['img'] = $time.$image;
+            }
+
+            Blog::where('id', $data['id_blog'])->update($update);
+            return 'update';
+        }catch(\Exception $e){
+            return 'error';
+        }
+
     }
 
     /**

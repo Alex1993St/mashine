@@ -31,8 +31,9 @@
                 </div>
                 <div class="col-md-6">
                     Select Image
-                    <input type="file" name="img" class="form-control" @change="update" ref="upload" placeholder="Image" v-validate="'required'" data-vv-as="img">
-                    <span>{{ errors.first('img') }}</span>
+                    <!--<input type="file" name="img" class="form-control" @change="update" ref="upload" placeholder="Image" v-validate="'required'" data-vv-as="img">-->
+                    <!--<span>{{ errors.first('img') }}</span>-->
+                    <input type="file" name="img" class="form-control" @change="update" ref="upload" placeholder="Image">
                 </div>
                 <input type="hidden" name="img_old" v-model="blog.img">
                 <div class="col-md-12">
@@ -65,6 +66,7 @@
         methods:{
             init(){
                 let id = this.$route.params.id;
+
                 if(id){
                     let vm = this;
                     vm.axios.get('/admin/blog/'+id+'/edit').then(function(data){
@@ -78,6 +80,7 @@
 
             submit(){
                let vm = this;
+               let id_blog = this.$route.params.id;
                vm.$validator.validateAll().then(valid => {
                    if(valid){
                        const config = { 'content-type': 'multipart/form-data' };
@@ -87,10 +90,12 @@
                        formData.append('description', this.blog.description);
                        formData.append('status', this.blog.status);
                        formData.append('img', this.blog.img);
+                       formData.append('img_old', this.blog.img);
+                       formData.append('id_blog', id_blog);
 
                       vm.axios.post('/admin/blog',formData, config
-                      ).then(function(data){
-                            vm.clear();
+                      ).then(function(){
+                            vm.$router.back();
                       }).catch(function(err){
                           console.log(err);
                       })
