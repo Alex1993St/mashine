@@ -8,14 +8,15 @@
 
 namespace App\Http\ViewComposers;
 use Illuminate\View\View;
+use App\Blog;
 
 class LastPostComposer
 {
 
     public function compose(View $view)
     {
-
-        $view->with(['post' => 1]);
+        $blog = Blog::orderBy('updated_at', 'desc')->limit(5)->get()->toArray();
+        $view->with(['blog' => $blog]);
     }
 
 }

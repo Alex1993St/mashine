@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Blog;
 
 class HomeController extends Controller
 {
@@ -43,7 +44,8 @@ class HomeController extends Controller
      */
     public function blog()
     {
-        return view('front/blog');
+        return view('front.blog', ['blog' => Blog::all()]);
+
     }
 
     /**

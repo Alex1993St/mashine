@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-xs-10 text-right menu-1">
                         <ul>
-                            <li class="active"><a href="{{ route('index') }}">Home</a></li>
+                            <li><a href="{{ route('index') }}">Home</a></li>
                             <li><a href="{{ route('work') }}">Work</a></li>
                             <li class="has-dropdown">
                                 <a href="{{ route('blog') }}">Blog</a>
