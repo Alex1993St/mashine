@@ -1,8 +1,9 @@
 <template>
     <v-app id="inspire">
         <div>
+            <router-link :to="{name: 'feedback'}">Feedback</router-link>
             <v-toolbar flat color="white">
-                <v-toolbar-title>My CRUD</v-toolbar-title>
+                 <v-toolbar-title>My CRUD</v-toolbar-title>
                 <v-divider
                     class="mx-2"
                     inset

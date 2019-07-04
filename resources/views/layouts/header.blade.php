@@ -81,6 +81,7 @@
                             <li><a href="{{ route('contact') }}">Contact</a></li>
                             @if(!Auth::guest())
                                 <li><a href="{{ route('logout') }}">Logout</a></li>
+                                <li><a href="{{ route('logout') }}">Logout</a></li>
                             @endif
                         </ul>
                     </div>

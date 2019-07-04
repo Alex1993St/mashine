@@ -16,7 +16,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        return Contact::all();
     }
 
     /**
@@ -87,6 +87,11 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        try{
+            Contact::where('id', $contact->id)->delete();
+            return 'delete';
+        }catch(\Exception $e){
+            return 'error';
+        }
     }
 }
