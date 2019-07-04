@@ -1,5 +1,5 @@
 <template>
-    <form class="row">
+    <div>
         <div class="col-md-6">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Имя" v-model="name" name="name" v-validate="'alpha|required'" data-vv-as="Имя">
@@ -20,10 +20,21 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <input value="Отправить" class="btn btn-primary btn-modify" @click="send()">
+                <button class="btn btn-primary btn-modify" @click="send()">Отправить</button>
             </div>
         </div>
-    </form>
+        <div v-if="success" class="d-flex col-md-12">
+            <div class="alert alert-success" role="alert">
+                {{ alert_mess }}
+            </div>
+        </div>
+        <div v-if="wrong"  class="d-flex col-md-12">
+            <div class="alert alert-danger" role="alert">
+                {{ alert_mess }}
+            </div>
+        </div>
+
+    </div>
 </template>
 
 <script>
@@ -35,15 +46,31 @@
                 name: '',
                 email: '',
                 message: '',
-
+                success: false,
+                wrong: false,
+                alert_mess: '',
             }
         },
 
         methods: {
             send(){
-                this.$validator.validateAll().then(valid => {
+                let vm = this;
+                vm.$validator.validateAll().then(valid => {
                     if (valid) {
-                        //axios
+                        vm.axios.post('/create', {
+                            name: vm.name,
+                            email: vm.email,
+                            message: vm.message
+                        }).then(function(data){
+                            vm.name = '';
+                            vm.email = '';
+                            vm.message = '';
+                            vm.success=  true;
+                            vm.alert_mess = data.data
+                        }).catch(function(err){
+                            vm.wrong= true;
+                            vm.alert_mess = err.data
+                        })
                     }else{
                        console.log("error");
                        //need create component modal error

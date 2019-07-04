@@ -5,13 +5,15 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function(){
     Route::get('/dashboard', 'Admin\AdminDashboardController@index')->name('dashboard');
     //Route::get('/blog', 'Admin\BlogController@index')->name('blog_show');
     Route::resources([
-        'blog' => 'Admin\BlogController'
+        'blog' => 'Admin\BlogController',
     ]);
+    Route::resource('contact', 'Admin\ContactController')->except('store');
 });
 
 Route::get('logout', 'Auth\LoginController@logout');
 Auth::routes();
 
+Route::post('/create', 'Admin\ContactController@store');
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/blog', 'HomeController@blog')->name('blog');
