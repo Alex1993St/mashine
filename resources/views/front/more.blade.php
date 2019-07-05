@@ -1,4 +1,11 @@
 @extends('layouts.app')
+
+@include('layouts.meta', [
+    'title' => $blog[0]['title'],
+    'description' => $blog[0]['short_text'],
+    'keywords' => 'keywords'
+])
+
 @section('content')
     <div class="container-wrap">
         <div id="fh5co-about">

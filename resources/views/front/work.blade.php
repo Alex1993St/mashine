@@ -1,4 +1,11 @@
 @extends('layouts.app')
+
+@include('layouts.meta', [
+    'title' => 'Work',
+    'description' => 'description',
+    'keywords' => 'keywords'
+])
+
 @section('content')
 	<div class="container-wrap">
 		<aside id="fh5co-hero">

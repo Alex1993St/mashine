@@ -1,6 +1,12 @@
 @extends('layouts.app')
-@section('content')
 
+@include('layouts.meta', [
+    'title' => 'Home',
+    'description' => 'description',
+    'keywords' => 'keywords'
+])
+
+@section('content')
 	<div class="container-wrap">
 		<aside id="fh5co-hero">
 			<div class="flexslider">
