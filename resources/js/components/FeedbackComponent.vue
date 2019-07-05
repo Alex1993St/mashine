@@ -3,6 +3,7 @@
         <div class="tab-content">
             <div class="tab-pane active container" id="home">
                 <router-link :to="{name: 'dashboard'}">Dashboard</router-link>
+                <router-link :to="{name: 'work'}">Work</router-link>
             </div>
         </div>
         <table class="table table-striped table-hover">

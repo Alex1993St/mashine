@@ -3,6 +3,7 @@
             <div class="tab-content">
                 <div class="tab-pane active container" id="home">
                     <router-link :to="{name: 'feedback'}">Feedback</router-link>
+                    <router-link :to="{name: 'work'}">Work</router-link>
                 </div>
             </div>
 
@@ -20,7 +21,7 @@
             </v-toolbar>
             <v-data-table
                 :headers="headers"
-                :items="blog"
+                :items="getBlog"
                 class="elevation-1"
             >
                 <template v-slot:items="props">
@@ -52,6 +53,8 @@
 </template>
 
 <script>
+   import {mapActions} from 'vuex';
+
     export default {
         name: "Blog",
         data: () => ({
@@ -70,14 +73,18 @@
             this.initialize()
         },
 
+        computed: {
+            getBlog(){
+                return this.$store.getters.BLOGS
+            },
+        },
+
         methods: {
+            ...mapActions([ 'Delete_Blog']),
+
             initialize () {
                 let vm = this;
-                vm.axios.get('/admin/blog').then(function(data){
-                    vm.blog = data.data;
-                }).catch(function(err){
-                    console.log(err);
-                })
+                vm.blog = this.$store.dispatch('All_Blog')
             },
 
             editItem(item){
@@ -85,14 +92,16 @@
             },
 
             deleteItem (item) {
-                const index = this.blog.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.blog.splice(index, 1)
                 let vm = this;
-                vm.axios.delete('/admin/blog/' + item.id).then(function(data){
-                    console.log(data)
-                }).catch(function(err){
-                    console.log(err);
-                })
+                if(confirm('Are you sure you want to delete this item?')){
+                    vm.axios.delete('/admin/blog/' + item.id).then(function(data){
+                        //vm.$store.dispatch('Delete_Blog', item.id);
+                        vm.Delete_Blog(item.id);
+                        console.log(data)
+                    }).catch(function(err){
+                        console.log(err);
+                    })
+                }
             },
 
         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Blog;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $blog = Blog::orderBy('updated_at', 'desc')->limit(4)->get()->toArray();
+        $blog =  Cache::remember('blog_index', 1, function (){
+            $blog = Blog::orderBy('updated_at', 'desc')->limit(4)->get()->toArray();
+
+            return $blog;
+        });
+
         $main_blog = array_shift($blog);
 
         return view('front/index')->with(['main_blog' => $main_blog, 'blog' => $blog]);
@@ -59,7 +65,11 @@ class HomeController extends Controller
      */
     public function blog()
     {
-        return view('front.blog', ['blog' => Blog::all()]);
+        $blog = Cache::remember('blogs', 120, function (){
+            return Blog::all();
+        });
+
+        return view('front.blog', ['blog' => $blog]);
 
     }
 

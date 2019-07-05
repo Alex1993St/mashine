@@ -6,6 +6,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function(){
     //Route::get('/blog', 'Admin\BlogController@index')->name('blog_show');
     Route::resources([
         'blog' => 'Admin\BlogController',
+        'work' => 'Admin\WorkController',
     ]);
     Route::resource('contact', 'Admin\ContactController')->except('store');
 });

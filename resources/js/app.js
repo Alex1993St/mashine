@@ -35,7 +35,11 @@ Vue.use(Vuetify);
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+
+
+// import file
 import router from './routes';
+import store from './store';
 
 /**
  * The following block of code may be used to automatically register your
@@ -61,5 +65,6 @@ Vue.component('contact', require('./components/ContactComponent').default);
 
 const app = new Vue({
     router,
+    store,
     el: '#app',
 });

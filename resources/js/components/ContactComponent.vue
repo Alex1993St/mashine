@@ -73,7 +73,6 @@
                         })
                     }else{
                        console.log("error");
-                       //need create component modal error
                     }
                 });
 

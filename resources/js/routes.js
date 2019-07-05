@@ -3,10 +3,10 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter);
 
 import Blog from './components/BlogComponent';
-
 import Add_Blog from './components/AddBlogComponent';
-
 import Feedback from './components/FeedbackComponent';
+import Work from './components/WorkComponent'
+
 
 const routes = [
     {
@@ -17,6 +17,8 @@ const routes = [
         path: '/add_blog/:id', name: 'edit', component: Add_Blog
     }, {
         path: '/feedback', name: 'feedback', component: Feedback
+    }, {
+        path: '/work', name: 'work', component: Work
     }
 ];
 
