@@ -36,14 +36,17 @@ class WorkController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $work = Work::create($request->all());
+        return $work;
 
-        $ins = [
-            'title' => $data['title'],
-            'price' => $data['price']
-        ];
-
-        return Work::create($ins);
+//        $data = $request->all();
+//
+//        $ins = [
+//            'title' => $data['title'],
+//            'price' => $data['price']
+//        ];
+//
+//        return Work::create($ins);
     }
 
     /**
@@ -54,7 +57,7 @@ class WorkController extends Controller
      */
     public function show(Work $work)
     {
-        //
+        return Company::findOrFail($work->id);
     }
 
     /**
@@ -77,12 +80,17 @@ class WorkController extends Controller
      */
     public function update(Request $request, Work $work)
     {
-        $data = $request->all();
 
-        return Work::where('id', $data['id'])->update([
-            'title' => $data['title'],
-            'price' => $data['price']
-        ]);
+        $work = Work::findOrFail($work->id);
+        $work->update($request->all());
+
+        return $work;
+//        $data = $request->all();
+//
+//        return Work::where('id', $data['id'])->update([
+//            'title' => $data['title'],
+//            'price' => $data['price']
+//        ]);
     }
 
     /**
@@ -93,6 +101,9 @@ class WorkController extends Controller
      */
     public function destroy(Work $work)
     {
-       return Work::where('id', $work->id)->delete();
+        $work = Work::findOrFail($work->id);
+        $work->delete();
+        return '';
+       //return Work::where('id', $work->id)->delete();
     }
 }
