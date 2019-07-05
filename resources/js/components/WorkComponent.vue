@@ -132,10 +132,9 @@
 
 
             editItem (item) {
-                this.EDIT_WORK(item);
-                // this.editedIndex = this.desserts.indexOf(item)
-                // this.editedItem = Object.assign({}, item)
-                this.dialog = true
+                 this.editedIndex = 0;
+                 this.editedItem = Object.assign({}, item)
+                 this.dialog = true
             },
 
             deleteItem (item) {
@@ -155,12 +154,11 @@
             },
 
             save () {
-                this.PUSH_WORK(this.editedItem);
-                // if (this.editedIndex > -1) {
-                //     Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                // } else {
-                //     this.desserts.push(this.editedItem)
-                // }
+                  if (this.editedIndex > -1) {
+                     this.EDIT_WORK(this.editedItem);
+                 } else {
+                     this.PUSH_WORK(this.editedItem);
+                 }
                 this.close()
             }
         }

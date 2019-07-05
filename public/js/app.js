@@ -2272,9 +2272,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.$store.dispatch('GET_WORK');
     },
     editItem: function editItem(item) {
-      this.EDIT_WORK(item); // this.editedIndex = this.desserts.indexOf(item)
-      // this.editedItem = Object.assign({}, item)
-
+      this.editedIndex = 0;
+      this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
@@ -2294,11 +2293,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 300);
     },
     save: function save() {
-      this.PUSH_WORK(this.editedItem); // if (this.editedIndex > -1) {
-      //     Object.assign(this.desserts[this.editedIndex], this.editedItem)
-      // } else {
-      //     this.desserts.push(this.editedItem)
-      // }
+      if (this.editedIndex > -1) {
+        this.EDIT_WORK(this.editedItem);
+      } else {
+        this.PUSH_WORK(this.editedItem);
+      }
 
       this.close();
     }

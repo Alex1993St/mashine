@@ -77,7 +77,12 @@ class WorkController extends Controller
      */
     public function update(Request $request, Work $work)
     {
-        //
+        $data = $request->all();
+
+        return Work::where('id', $data['id'])->update([
+            'title' => $data['title'],
+            'price' => $data['price']
+        ]);
     }
 
     /**
