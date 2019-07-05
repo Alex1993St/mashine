@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Work;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class WorkController extends Controller
 {
@@ -14,7 +15,7 @@ class WorkController extends Controller
      */
     public function index()
     {
-        //
+        return Work::all();
     }
 
     /**
@@ -35,7 +36,14 @@ class WorkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $ins = [
+            'title' => $data['title'],
+            'price' => $data['price']
+        ];
+
+        return Work::create($ins);
     }
 
     /**
@@ -80,6 +88,6 @@ class WorkController extends Controller
      */
     public function destroy(Work $work)
     {
-        //
+       return Work::where('id', $work->id)->delete();
     }
 }

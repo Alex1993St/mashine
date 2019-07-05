@@ -2137,6 +2137,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2212,64 +2217,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "WorkComponent",
   data: function data() {
     return {
       dialog: false,
       headers: [{
-        text: 'Dessert (100g serving)',
+        text: 'id',
         align: 'left',
         sortable: false,
-        value: 'name'
+        value: 'id'
       }, {
-        text: 'Calories',
-        value: 'calories'
+        text: 'title',
+        value: 'title'
       }, {
-        text: 'Fat (g)',
-        value: 'fat'
-      }, {
-        text: 'Carbs (g)',
-        value: 'carbs'
-      }, {
-        text: 'Protein (g)',
-        value: 'protein'
+        text: 'price',
+        value: 'price'
       }, {
         text: 'Actions',
         value: 'name',
         sortable: false
       }],
-      desserts: [],
+      // desserts: [],
       editedIndex: -1,
       editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      }
+        title: '',
+        price: 0
+      } // defaultItem: {
+      //     title: '',
+      //     price: 0
+      // }
+
     };
   },
   computed: {
     formTitle: function formTitle() {
       return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+    },
+    work_list: function work_list() {
+      return this.$store.getters.WORKS;
     }
   },
   watch: {
@@ -2278,100 +2265,44 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.initialize();
+    this.getWork();
   },
-  methods: {
-    initialize: function initialize() {
-      this.desserts = [{
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0
-      }, {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3
-      }, {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0
-      }, {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3
-      }, {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9
-      }, {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0
-      }, {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0
-      }, {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5
-      }, {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9
-      }, {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7
-      }];
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['PUSH_WORK', 'EDIT_WORK', 'REMOVE_WORK']), {
+    getWork: function getWork() {
+      return this.$store.dispatch('GET_WORK');
     },
     editItem: function editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
+      this.EDIT_WORK(item); // this.editedIndex = this.desserts.indexOf(item)
+      // this.editedItem = Object.assign({}, item)
+
       this.dialog = true;
     },
     deleteItem: function deleteItem(item) {
-      var index = this.desserts.indexOf(item);
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
+      //const index = this.desserts.indexOf(item)
+      //confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+      if (confirm('Are you sure you want to delete this item?')) {
+        this.REMOVE_WORK(item.id);
+      }
     },
     close: function close() {
       var _this = this;
 
       this.dialog = false;
       setTimeout(function () {
-        _this.editedItem = Object.assign({}, _this.defaultItem);
+        //this.editedItem = Object.assign({}, this.defaultItem)
         _this.editedIndex = -1;
       }, 300);
     },
     save: function save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
+      this.PUSH_WORK(this.editedItem); // if (this.editedIndex > -1) {
+      //     Object.assign(this.desserts[this.editedIndex], this.editedItem)
+      // } else {
+      //     this.desserts.push(this.editedItem)
+      // }
 
       this.close();
     }
-  }
+  })
 });
 
 /***/ }),
@@ -52822,13 +52753,13 @@ var render = function() {
                                   { attrs: { xs12: "", sm6: "", md4: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: { label: "Dessert name" },
+                                      attrs: { label: "Title" },
                                       model: {
-                                        value: _vm.editedItem.name,
+                                        value: _vm.editedItem.title,
                                         callback: function($$v) {
-                                          _vm.$set(_vm.editedItem, "name", $$v)
+                                          _vm.$set(_vm.editedItem, "title", $$v)
                                         },
-                                        expression: "editedItem.name"
+                                        expression: "editedItem.title"
                                       }
                                     })
                                   ],
@@ -52840,75 +52771,13 @@ var render = function() {
                                   { attrs: { xs12: "", sm6: "", md4: "" } },
                                   [
                                     _c("v-text-field", {
-                                      attrs: { label: "Calories" },
+                                      attrs: { label: "Price" },
                                       model: {
-                                        value: _vm.editedItem.calories,
+                                        value: _vm.editedItem.price,
                                         callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.editedItem,
-                                            "calories",
-                                            $$v
-                                          )
+                                          _vm.$set(_vm.editedItem, "price", $$v)
                                         },
-                                        expression: "editedItem.calories"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: { label: "Fat (g)" },
-                                      model: {
-                                        value: _vm.editedItem.fat,
-                                        callback: function($$v) {
-                                          _vm.$set(_vm.editedItem, "fat", $$v)
-                                        },
-                                        expression: "editedItem.fat"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: { label: "Carbs (g)" },
-                                      model: {
-                                        value: _vm.editedItem.carbs,
-                                        callback: function($$v) {
-                                          _vm.$set(_vm.editedItem, "carbs", $$v)
-                                        },
-                                        expression: "editedItem.carbs"
-                                      }
-                                    })
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
-                                  [
-                                    _c("v-text-field", {
-                                      attrs: { label: "Protein (g)" },
-                                      model: {
-                                        value: _vm.editedItem.protein,
-                                        callback: function($$v) {
-                                          _vm.$set(
-                                            _vm.editedItem,
-                                            "protein",
-                                            $$v
-                                          )
-                                        },
-                                        expression: "editedItem.protein"
+                                        expression: "editedItem.price"
                                       }
                                     })
                                   ],
@@ -52961,28 +52830,20 @@ var render = function() {
         _vm._v(" "),
         _c("v-data-table", {
           staticClass: "elevation-1",
-          attrs: { headers: _vm.headers, items: _vm.desserts },
+          attrs: { headers: _vm.headers, items: _vm.work_list },
           scopedSlots: _vm._u([
             {
               key: "items",
               fn: function(props) {
                 return [
-                  _c("td", [_vm._v(_vm._s(props.item.name))]),
+                  _c("td", [_vm._v(_vm._s(props.item.id))]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.calories))
+                    _vm._v(_vm._s(props.item.title))
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.fat))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.carbs))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-xs-right" }, [
-                    _vm._v(_vm._s(props.item.protein))
+                    _vm._v(_vm._s(props.item.price))
                   ]),
                   _vm._v(" "),
                   _c(
@@ -53037,7 +52898,11 @@ var render = function() {
                     "v-btn",
                     {
                       attrs: { color: "primary" },
-                      on: { click: _vm.initialize }
+                      on: {
+                        click: function($event) {
+                          return _vm.getWork()
+                        }
+                      }
                     },
                     [_vm._v("Reset")]
                   )
@@ -95474,6 +95339,156 @@ var blog = {
 
 /***/ }),
 
+/***/ "./resources/js/modules/work.js":
+/*!**************************************!*\
+  !*** ./resources/js/modules/work.js ***!
+  \**************************************/
+/*! exports provided: work */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "work", function() { return work; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var work = {
+  state: {
+    works: []
+  },
+  getters: {
+    WORKS: function WORKS(state) {
+      return state.works;
+    }
+  },
+  mutations: {
+    SET_WORK: function SET_WORK(state, payload) {
+      state.works = payload;
+    },
+    ADD_WORK: function ADD_WORK(state, payload) {
+      state.works.push(payload);
+    },
+    UPDATE_WORK: function UPDATE_WORK(state, payload) {
+      var idx = state.works.findIndex(function (work) {
+        return work.id === payload.id;
+      });
+      Vue.set(state.works, idx, payload);
+    },
+    DELETE_WORK: function DELETE_WORK(state, payload) {
+      var idx = state.works.findIndex(function (work) {
+        return work.id === payload.id;
+      });
+      state.works.splice(idx, 1);
+    }
+  },
+  actions: {
+    GET_WORK: function () {
+      var _GET_WORK = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(context, payload) {
+        var data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/admin/work');
+
+              case 2:
+                data = _context.sent;
+                context.commit('SET_WORK', data.data);
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function GET_WORK(_x, _x2) {
+        return _GET_WORK.apply(this, arguments);
+      }
+
+      return GET_WORK;
+    }(),
+    PUSH_WORK: function () {
+      var _PUSH_WORK = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context, payload) {
+        var data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/admin/work', payload);
+
+              case 2:
+                data = _context2.sent;
+                context.commit('ADD_WORK', data.data);
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function PUSH_WORK(_x3, _x4) {
+        return _PUSH_WORK.apply(this, arguments);
+      }
+
+      return PUSH_WORK;
+    }(),
+    EDIT_WORK: function () {
+      var _EDIT_WORK = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context, payload) {
+        var data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/admin/work/' + payload.id, payload);
+
+              case 2:
+                data = _context3.sent;
+                context.commit('UPDATE_WORK', payload.id);
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function EDIT_WORK(_x5, _x6) {
+        return _EDIT_WORK.apply(this, arguments);
+      }
+
+      return EDIT_WORK;
+    }(),
+    REMOVE_WORK: function REMOVE_WORK(context, payload) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/admin/work/' + payload);
+      context.commit('DELETE_WORK', payload);
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -95537,13 +95552,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _modules_blog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/blog */ "./resources/js/modules/blog.js");
+/* harmony import */ var _modules_work__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/work */ "./resources/js/modules/work.js");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
+
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    blog: _modules_blog__WEBPACK_IMPORTED_MODULE_2__["blog"]
+    blog: _modules_blog__WEBPACK_IMPORTED_MODULE_2__["blog"],
+    work: _modules_work__WEBPACK_IMPORTED_MODULE_3__["work"]
   }
 }));
 
