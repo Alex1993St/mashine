@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Work;
 use Illuminate\Http\Request;
 use App\Blog;
 use Illuminate\Support\Facades\Cache;
@@ -27,13 +28,14 @@ class HomeController extends Controller
     {
         $blog =  Cache::remember('blog_index', 1, function (){
             $blog = Blog::orderBy('updated_at', 'desc')->limit(4)->get()->toArray();
-
             return $blog;
         });
 
+        $work = Work::limit(3)->get()->toArray();
+
         $main_blog = array_shift($blog);
 
-        return view('front/index')->with(['main_blog' => $main_blog, 'blog' => $blog]);
+        return view('front/index')->with(['main_blog' => $main_blog, 'blog' => $blog, 'works' => $work]);
     }
 
     /**

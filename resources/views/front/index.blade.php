@@ -116,30 +116,25 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4 text-center animate-box">
-					<a href="work-single.html" class="work"  style="background-image: url(images/portfolio-1.jpg);">
-						<div class="desc">
-							<h3>Project Name</h3>
-							<span>Illustration</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<a href="work-single.html" class="work" style="background-image: url(images/portfolio-2.jpg);">
-						<div class="desc">
-							<h3>Project Name</h3>
-							<span>Brading</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 text-center animate-box">
-					<a href="work-single.html" class="work" style="background-image: url(images/portfolio-3.jpg);">
-						<div class="desc">
-							<h3>Project Name</h3>
-							<span>Illustration</span>
-						</div>
-					</a>
-				</div>
+                @forelse($works as $work)
+                    <div class="col-md-4 text-center animate-box">
+                        <a href="work-single.html" class="work"  style="background-image: url(images/portfolio-1.jpg);">
+                            <div class="desc">
+                                <h3>{{ $work['title'] }}</h3>
+                                <span>{{ $work['price'] }}</span>
+                            </div>
+                        </a>
+                    </div>
+                @empty
+                        <div class="col-md-4 text-center animate-box">
+                            <a href="work-single.html" class="work"  style="background-image: url(images/portfolio-1.jpg);">
+                                <div class="desc">
+                                    <h3>Empty</h3>
+                                    <span>Sorry</span>
+                                </div>
+                            </a>
+                        </div>
+                 @endforelse
 			</div>
 		</div>
 
