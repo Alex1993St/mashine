@@ -2243,7 +2243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       editedIndex: -1,
       editedItem: {
         title: '',
-        price: 0
+        price: ''
       } // defaultItem: {
       //     title: '',
       //     price: 0
@@ -2288,7 +2288,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.dialog = false;
       setTimeout(function () {
-        //this.editedItem = Object.assign({}, this.defaultItem)
+        _this.editedItem = Object.assign({}, _this.defaultItem);
         _this.editedIndex = -1;
       }, 300);
     },
@@ -52740,7 +52740,7 @@ var render = function() {
                       "v-card-text",
                       [
                         _c(
-                          "v-container",
+                          "v-flex",
                           { attrs: { "grid-list-md": "" } },
                           [
                             _c(
@@ -52749,7 +52749,7 @@ var render = function() {
                               [
                                 _c(
                                   "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  { attrs: { xs12: "", sm12: "", md12: "" } },
                                   [
                                     _c("v-text-field", {
                                       attrs: { label: "Title" },
@@ -52767,7 +52767,7 @@ var render = function() {
                                 _vm._v(" "),
                                 _c(
                                   "v-flex",
-                                  { attrs: { xs12: "", sm6: "", md4: "" } },
+                                  { attrs: { xs12: "", sm12: "", md12: "" } },
                                   [
                                     _c("v-text-field", {
                                       attrs: { label: "Price" },
@@ -95350,13 +95350,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "work", function() { return work; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 var work = {
@@ -95379,7 +95382,7 @@ var work = {
       var idx = state.works.findIndex(function (work) {
         return work.id === payload.id;
       });
-      Vue.set(state.works, idx, payload);
+      vue__WEBPACK_IMPORTED_MODULE_1___default.a.set(state.works, idx, payload);
     },
     DELETE_WORK: function DELETE_WORK(state, payload) {
       var idx = state.works.findIndex(function (work) {
@@ -95399,7 +95402,7 @@ var work = {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/admin/work');
+                return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/admin/work');
 
               case 2:
                 data = _context.sent;
@@ -95429,7 +95432,7 @@ var work = {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/admin/work', payload);
+                return axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/admin/work', payload);
 
               case 2:
                 data = _context2.sent;
@@ -95459,11 +95462,11 @@ var work = {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/admin/work/' + payload.id, payload);
+                return axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('/admin/work/' + payload.id, payload);
 
               case 2:
                 data = _context3.sent;
-                context.commit('UPDATE_WORK', payload.id);
+                context.commit('UPDATE_WORK', data.data);
 
               case 4:
               case "end":
@@ -95480,7 +95483,7 @@ var work = {
       return EDIT_WORK;
     }(),
     REMOVE_WORK: function REMOVE_WORK(context, payload) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/admin/work/' + payload);
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]('/admin/work/' + payload);
       context.commit('DELETE_WORK', payload);
     }
   }

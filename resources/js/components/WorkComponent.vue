@@ -19,17 +19,17 @@
                         </v-card-title>
 
                         <v-card-text>
-                            <v-container grid-list-md>
+                            <v-flex grid-list-md>
                                 <v-layout wrap>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm12 md12>
                                         <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md4>
+                                    <v-flex xs12 sm12 md12>
                                         <v-text-field v-model="editedItem.price" label="Price"></v-text-field>
                                     </v-flex>
 
                                 </v-layout>
-                            </v-container>
+                            </v-flex>
                         </v-card-text>
 
                         <v-card-actions>
@@ -95,7 +95,7 @@
             editedIndex: -1,
             editedItem: {
                 title: '',
-                price: 0
+                price: ''
             },
             // defaultItem: {
             //     title: '',
@@ -148,7 +148,7 @@
             close () {
                 this.dialog = false
                 setTimeout(() => {
-                    //this.editedItem = Object.assign({}, this.defaultItem)
+                    this.editedItem = Object.assign({}, this.defaultItem)
                     this.editedIndex = -1
                 }, 300)
             },

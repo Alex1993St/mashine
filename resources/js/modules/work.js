@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import axios from 'axios';
 
 export const work = {
@@ -44,7 +45,7 @@ export const work = {
 
         EDIT_WORK: async (context, payload) => {
             let data = await axios.put('/admin/work/' + payload.id, payload)
-            context.commit('UPDATE_WORK', payload.id);
+            context.commit('UPDATE_WORK', data.data);
         },
 
         REMOVE_WORK: (context, payload) => {

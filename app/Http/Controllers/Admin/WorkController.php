@@ -57,7 +57,7 @@ class WorkController extends Controller
      */
     public function show(Work $work)
     {
-        return Company::findOrFail($work->id);
+        return Work::findOrFail($work->id);
     }
 
     /**
@@ -82,7 +82,7 @@ class WorkController extends Controller
     {
 
         $work = Work::findOrFail($work->id);
-        $work->update($request->all());
+        $work->update($request->except(['id']));
 
         return $work;
 //        $data = $request->all();
