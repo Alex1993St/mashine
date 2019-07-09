@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Blog;
 use Illuminate\Support\Facades\Cache;
 
+
 class HomeController extends Controller
 {
     /**
@@ -94,4 +95,5 @@ class HomeController extends Controller
     {
         return view('front/work');
     }
+
 }

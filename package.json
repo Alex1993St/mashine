@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "form-data": "^2.4.0",
+        "laravel-echo": "^1.5.4",
+        "pusher-js": "^4.4.0",
         "vee-validate": "^2.2.11",
         "vue-axios": "^2.1.4",
         "vue-i18n": "^8.11.2",

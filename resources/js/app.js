@@ -22,6 +22,12 @@ const i18n = new VueI18n({
     locale: 'ru'
 });
 
+// const locale = html.getAttribute('lang');
+// const i18n = new VueI18n({
+//     locale: locale || 'en',
+//     messages: {}
+// });
+
 Vue.use(VeeValidate, {
     i18n,
     dictionary: {
@@ -34,7 +40,6 @@ Vue.use(Vuetify);
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-
 
 
 // import file
@@ -54,6 +59,9 @@ import store from './store';
 
 Vue.component('contact', require('./components/ContactComponent').default);
 
+Vue.component('chat-messages', require('./components/ChatMessages').default);
+Vue.component('chat-form', require('./components/ChatForm').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -62,9 +70,40 @@ Vue.component('contact', require('./components/ContactComponent').default);
  */
 
 
-
 const app = new Vue({
     router,
     store,
     el: '#app',
+    data: {
+        messages: []
+    },
+
+    created(){
+        this.fetchMessages();
+    },
+
+    methods: {
+        fetchMessages(){
+            axios.get('/messages').then(response =>{
+                this.messages = response.data;
+            });
+
+            Echo.private('chat')
+                .listen('MessageSent', (e) => {
+                    this.messages.push({
+                        message: e.message.message,
+                        user: e.user
+                    });
+                });
+
+        },
+
+        addMessage(message){
+            this.messages.push(message);
+
+            axios.post('/messages', message).then(response => {
+                console.log(response.data);
+            })
+        }
+    }
 });
