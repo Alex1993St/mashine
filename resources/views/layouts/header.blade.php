@@ -80,6 +80,7 @@
                             </li>
                             <li><a href="{{ route('about') }}">About</a></li>
                             <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <li><a href="{{ route('chat') }}">Chat</a></li>
                             @if(!Auth::guest())
                                 <li><a href="{{ route('logout') }}">Logout</a></li>
                             @endif

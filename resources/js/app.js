@@ -59,9 +59,6 @@ import store from './store';
 
 Vue.component('contact', require('./components/ContactComponent').default);
 
-// Vue.component('chat-messages', require('./components/ChatMessages').default);
-// Vue.component('chat-form', require('./components/ChatForm').default);
-
 Vue.component('chat', require('./components/ChatComponent').default);
 
 /**

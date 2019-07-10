@@ -2310,6 +2310,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "WorkComponent",
@@ -63038,7 +63041,23 @@ var render = function() {
           "v-toolbar",
           { attrs: { flat: "", color: "white" } },
           [
-            _c("v-toolbar-title", [_vm._v("My CRUD")]),
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane active container",
+                attrs: { id: "home" }
+              },
+              [
+                _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
+                  _vm._v("Dashboard")
+                ]),
+                _vm._v(" "),
+                _c("router-link", { attrs: { to: { name: "feedback" } } }, [
+                  _vm._v("Feedback")
+                ])
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("v-divider", {
               staticClass: "mx-2",
@@ -105179,9 +105198,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('contact', __webpack_require__(/*! ./components/ContactComponent */ "./resources/js/components/ContactComponent.vue")["default"]); // Vue.component('chat-messages', require('./components/ChatMessages').default);
-// Vue.component('chat-form', require('./components/ChatForm').default);
-
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('contact', __webpack_require__(/*! ./components/ContactComponent */ "./resources/js/components/ContactComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('chat', __webpack_require__(/*! ./components/ChatComponent */ "./resources/js/components/ChatComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

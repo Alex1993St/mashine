@@ -2,7 +2,10 @@
     <v-app id="inspire">
         <div>
             <v-toolbar flat color="white">
-                <v-toolbar-title>My CRUD</v-toolbar-title>
+                <div class="tab-pane active container" id="home">
+                    <router-link :to="{name: 'dashboard'}">Dashboard</router-link>
+                    <router-link :to="{name: 'feedback'}">Feedback</router-link>
+                </div>
                 <v-divider
                     class="mx-2"
                     inset
