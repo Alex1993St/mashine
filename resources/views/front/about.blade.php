@@ -30,8 +30,12 @@
 		<div id="fh5co-about">
 			<div class="row animate-box">
 				<div class="col-md-6 col-md-offset-3 text-center heading-section">
-					<props-component about-title="Our History"></props-component>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+					<props-component
+                        about-title="Our History"
+                        v-bind:description="{
+                                desc: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
+                              }"
+                    ></props-component>
 				</div>
 			</div>
 

@@ -1,14 +1,20 @@
 <template>
-   <h3>
-       {{ aboutTitle }}
-   </h3>
+   <div>
+       <h3>
+           {{ aboutTitle }}
+       </h3>
+       <p>
+           {{ description.desc }}
+       </p>
+   </div>
+
 </template>
 
 <script>
     // views->front->about.blade.php
 
     export default {
-        props: ['aboutTitle']
+        props: ['aboutTitle', 'description']
     }
 </script>
 

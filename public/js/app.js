@@ -2236,9 +2236,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 // views->front->about.blade.php
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['aboutTitle']
+  props: ['aboutTitle', 'description']
 });
 
 /***/ }),
@@ -63055,7 +63061,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h3", [_vm._v("\n    " + _vm._s(_vm.aboutTitle) + "\n")])
+  return _c("div", [
+    _c("h3", [_vm._v("\n        " + _vm._s(_vm.aboutTitle) + "\n    ")]),
+    _vm._v(" "),
+    _c("p", [_vm._v("\n        " + _vm._s(_vm.description.desc) + "\n    ")])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
