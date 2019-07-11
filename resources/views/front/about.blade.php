@@ -31,7 +31,7 @@
 			<div class="row animate-box">
 				<div class="col-md-6 col-md-offset-3 text-center heading-section">
 					<props-component
-                        about-title="Our History"
+                        about-title="our History"
                         v-bind:description="{
                                 desc: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
                               }"

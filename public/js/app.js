@@ -63062,7 +63062,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", [_vm._v("\n        " + _vm._s(_vm.aboutTitle) + "\n    ")]),
+    _c("h3", [
+      _vm._v(
+        "\n        " + _vm._s(_vm._f("toUpLetter")(_vm.aboutTitle)) + "\n    "
+      )
+    ]),
     _vm._v(" "),
     _c("p", [_vm._v("\n        " + _vm._s(_vm.description.desc) + "\n    ")])
   ])
@@ -105236,6 +105240,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vee_validate__WEBPACK_IMPORTED_MO
   dictionary: {
     ru: vee_validate_dist_locale_ru__WEBPACK_IMPORTED_MODULE_4___default.a
   }
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('toUpLetter', function (data) {
+  if (!data) return '';
+  data = data.toString();
+  return data.charAt(0).toUpperCase() + data.slice(1);
 });
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_6___default.a);

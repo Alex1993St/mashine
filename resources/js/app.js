@@ -35,6 +35,12 @@ Vue.use(VeeValidate, {
     }
 });
 
+Vue.filter('toUpLetter', function(data){
+   if(!data) return '';
+   data = data.toString();
+   return data.charAt(0).toUpperCase()+data.slice(1);
+});
+
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 

@@ -1,7 +1,7 @@
 <template>
    <div>
        <h3>
-           {{ aboutTitle }}
+           {{ aboutTitle | toUpLetter }}
        </h3>
        <p>
            {{ description.desc }}
