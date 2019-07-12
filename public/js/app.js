@@ -1773,7 +1773,17 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.init();
   },
+  //use if move from page/n to page/n+1
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var vm = this;
+    vm.axios.get('/admin/blog/' + to.params.id + '/edit').then(function (data) {
+      vm.blog = data.data[0];
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  },
   methods: {
+    // use when come in page
     init: function init() {
       var id = this.$route.params.id;
 
@@ -1781,7 +1791,6 @@ __webpack_require__.r(__webpack_exports__);
         var vm = this;
         vm.axios.get('/admin/blog/' + id + '/edit').then(function (data) {
           vm.blog = data.data[0];
-          console.log(vm.blog);
         })["catch"](function (err) {
           console.log(err);
         });

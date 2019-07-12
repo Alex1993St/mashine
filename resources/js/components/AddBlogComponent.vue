@@ -62,16 +62,24 @@
             this.init()
         },
 
+        //use if move from page/n to page/n+1
+        beforeRouteUpdate(to, from, next){
+            let vm = this;
+            vm.axios.get('/admin/blog/'+to.params.id+'/edit').then(function(data){
+                vm.blog = data.data[0];
+            }).catch(function(err){
+                console.log(err);
+            })
+        },
 
         methods:{
+            // use when come in page
             init(){
                 let id = this.$route.params.id;
-
                 if(id){
                     let vm = this;
                     vm.axios.get('/admin/blog/'+id+'/edit').then(function(data){
                         vm.blog = data.data[0];
-                        console.log(vm.blog);
                     }).catch(function(err){
                         console.log(err);
                     })
