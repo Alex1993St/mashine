@@ -17,7 +17,7 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 slider-text slider-text-bg">
 				   				<div class="slider-text-inner text-center">
-				   					<h1>Contact</h1>
+				   					<on-component></on-component>
 									<h2>Here must be map</h2>
 				   				</div>
 				   			</div>

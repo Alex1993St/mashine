@@ -69,7 +69,7 @@ Vue.component('chat', require('./components/ChatComponent').default);
 
 Vue.component('props-component', require('./components/PropsComponent').default);
 
-
+Vue.component('on-component', require('./components/OnComponent').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
