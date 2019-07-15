@@ -24,3 +24,6 @@ Route::get('/more/{slug}', 'HomeController@more')->name('more');
 Route::get('/chat', 'ChatController@chat')->name('chat');
 Route::get('/messages', 'ChatController@fetchMessages');
 Route::post('/messages', 'ChatController@sendMessage');
+
+Route::get('image/index', 'ImageController@index');
+Route::post('image/upload', 'ImageController@upload');
