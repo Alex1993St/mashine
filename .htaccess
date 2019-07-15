@@ -1,0 +1,338 @@
+#Файл (или файлы) .htaccess будет задавать правила работы веб-сервера только в каталоге, где он размещен, и его дочерних каталогах, без глобальных изменений работы всего сервера.
+#Имя файла .htaccess — общепринятое, но вовсе не обязательное. В httpd.conf можно задать другое имя с помощью директивы AccessFileName, например, так:
+#AccessFileName .config
+
+##ErrorDocument 404 /error_pages/404.html
+#ErrorDocument 404 http://yourdomain.com/404.html
+#ErrorDocument 401 http://yourdomain.com/error/404.php
+#ErrorDocument 500 http://yourdomain.com/500
+
+#Redirect /old_dir/ http://www.yourdomain.com/new_dir/index.html
+#Redirect /401 http://127.0.0.1:8000/404
+#Redirect /500 http://127.0.0.1:8000/404
+#Redirect 301 / http://www.newdomain.com/ #Перенаправление всего сайта на новый домен
+#Redirect 301 /page1.html http://mydomain.com/page2.html #Перенаправление страницы на новую
+
+##Add acceess to file
+#AuthName "Member's Area Name" #имя защищенной директории
+#AuthUserFile /path/to/password/file/.htpasswd #местонахождение файла с паролем
+#AuthType Basic
+#require valid-user
+#username:encryptedpassword
+#fred_smith:oCF9Pam/MXJg2
+
+##allow IP to site
+#order allow,deny
+#deny from 255.0.0.0
+#deny from 123.45.6.  # 123.45.6.* -> block all with this IP 123.45.6.123, 123.45.6.596 etc
+## or Запрет веб-доступ
+##deny from all
+#allow from all
+##Запрет доступа к файлу:
+#<Files private.html >
+#Order allow,deny
+#Deny from all
+
+##блокировать трафик
+#RewriteEngine on
+## Options +FollowSymlinks
+#RewriteCond %{HTTP_REFERER} otherdomain\.com [NC]
+## or
+#RewriteCond %{HTTP_REFERER} otherdomain\.com [NC,OR]
+#RewriteCond %{HTTP_REFERER} anotherdomain\.com
+#RewriteRule .* - [F]
+#[NC] -> что он не чувствителен к регистру
+#Hескольких рефереров - это модифицированный флаг [NC, OR], его следует добавить ко всем доменам, кроме последнего.
+
+##Предотвращение «горячих ссылок» означает прекращение показа ваших файлов или содержимого веб-сайтами, которые не принадлежат вам
+##горячую связь часто называют «кражей пропускной способности».
+#RewriteEngine on
+#RewriteCond %{HTTP_REFERER} !^$
+#RewriteCond %{HTTP_REFERER} !^http://(www\.)?yourdomain.com/.*$ [NC]
+#RewriteRule \.(gif|jpg|css)$ - [F]
+##Вышеуказанные строки указывают веб-серверу Apache блокировать все ссылки на файлы «.gif», «.jpg» и «.css», которые не принадлежат доменному имени «http://www.yourdomain.com/».
+#RewriteEngine on
+#RewriteCond %{HTTP_REFERER} !^$
+#RewriteCond %{HTTP_REFERER} !^http://(www\.)?yourdomain.com/.*$ [NC]
+#RewriteRule \.(gif|jpg)$ http://www.yourdomain.com/hotlink.jpg [R,L]
+##Вышеуказанные строки указывают веб-серверу Apache блокировать все ссылки на файлы «.gif» и «.jpg», которые не принадлежат доменному имени «http://www.yourdomain.com/», и отображать файл «http: //www.yourdomain.com/hotlink.jpg 'вместо.
+
+##как заблокировать некоторых распространенных «ботов» и злоумышленников.
+#RewriteEngine On
+#RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Bot\ mailto:craftbot@yahoo.com [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^ChinaClaw [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Custo [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^DISCo [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Download\ Demon [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^eCatch [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^EirGrabber [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^EmailSiphon [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^EmailWolf [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Express\ WebPictures [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^ExtractorPro [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^EyeNetIE [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^FlashGet [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^GetRight [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^GetWeb! [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Go!Zilla [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Go-Ahead-Got-It [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^GrabNet [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Grafula [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^HMView [OR]
+#RewriteCond %{HTTP_USER_AGENT} HTTrack [NC,OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Image\ Stripper [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Image\ Sucker [OR]
+#RewriteCond %{HTTP_USER_AGENT} Indy\ Library [NC,OR]
+#RewriteCond %{HTTP_USER_AGENT} ^InterGET [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Internet\ Ninja [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^JetCar [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^JOC\ Web\ Spider [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^larbin [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^LeechFTP [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Mass\ Downloader [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^MIDown\ tool [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Mister\ PiX [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Navroad [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^NearSite [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^NetAnts [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^NetSpider [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^NetZIP [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Octopus [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Offline\ Explorer [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Offline\ Navigator [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^PageGrabber [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Papa\ Foto [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^pavuk [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^pcBrowser [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^RealDownload [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^ReGet [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^SiteSnagger [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^SmartDownload [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^SuperBot [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^SuperHTTP [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Surfbot [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^tAkeOut [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Teleport\ Pro [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^VoidEYE [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Web\ Image\ Collector [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Web\ Sucker [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebAuto [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebFetch [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebGo\ IS [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebLeacher [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebReaper [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebSauger [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Website\ eXtractor [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Website\ Quester [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebStripper [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebWhacker [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WebZIP [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Wget [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
+#RewriteCond %{HTTP_USER_AGENT} ^Zeus
+#RewriteRule ^.* - [F,L]
+
+##Команда directoryindex позволяет вам указать страницу по умолчанию, которая будет отображаться при доступе к каталогу.
+#DirectoryIndex index.html
+## or
+#DirectoryIndex index.html index.cgi index.php
+
+
+##Типы MIME устанавливают, что такое файл, или, скорее, какие расширения файлов относятся к каким типам файлов.
+#AddType text/html htm0
+#AddType application/x-shockwave-flash swf
+#AddType text/html .html .htm
+#AddType text/plain .txt
+#AddType text/richtext .rtx
+#AddType text/tab-separated-values .tsv
+#AddType text/x-setext .etx
+#AddType text/x-server-parsed-html .shtml .sht
+#AddType application/macbinhex-40 .hqx
+#AddType application/netalivelink .nel
+#AddType application/netalive .net
+#AddType application/news-message-id
+#AddType application/news-transmission
+#AddType application/octet-stream .bin .exe
+#AddType application/oda .oda
+#AddType application/pdf .pdf
+#AddType application/postscript .ai .eps .ps
+#AddType application/remote-printing
+#AddType application/rtf .rtf
+#AddType application/slate
+#AddType application/zip .zip
+#AddType application/x-mif .mif
+#AddType application/wita
+#AddType application/wordperfect5.1
+#AddType application/x-csh .csh
+#AddType application/x-dvi .dvi
+#AddType application/x-hdf .hdf
+#AddType application/x-latex .latex
+#AddType application/x-netcdf .nc .cdf
+#AddType application/x-sh .sh
+#AddType application/x-tcl .tcl
+#AddType application/x-tex .tex
+#AddType application/x-texinfo .texinfo .texi
+#AddType application/x-troff .t .tr .roff
+#AddType application/x-troff-man .man
+#AddType application/x-troff-me .me
+#AddType application/x-troff-ms .ms
+#AddType application/x-wais-source .src
+#AddType application/x-bcpio .bcpio
+#AddType application/x-cpio .cpio
+#AddType application/x-gtar .gtar
+#AddType application/x-shar .shar
+#AddType application/x-sv4cpio .sv4cpio
+#AddType application/x-sv4crc .sv4crc
+#AddType application/x-tar .tar
+#AddType application/x-ustar .ustar
+#AddType application/x-director .dcr
+#AddType application/x-director .dir
+#AddType application/x-director .dxr
+#AddType application/x-onlive .sds
+#AddType application/x-httpd-cgi .cgi
+#AddType image/gif .gif .GIF
+#AddType image/ief .ief
+#AddType image/jpeg .jpeg .jpg .jpe .JPG
+#AddType image/tiff .tiff .tif
+#AddType image/x-cmu-raster .ras
+#AddType image/x-portable-anymap .pnm
+#AddType image/x-portable-bitmap .pbm
+#AddType image/x-portable-graymap .pgm
+#AddType image/x-portable-pixmap .ppm
+#AddType image/x-rgb .rgb
+#AddType image/x-xbitmap .xbm
+#AddType image/x-xpixmap .xpm
+#AddType image/x-xwindowdump .xwd
+#AddType audio/basic .au .snd
+#AddType audio/x-aiff .aif .aiff .aifc
+#AddType audio/x-wav .wav
+#AddType audio/x-pn-realaudio .ram
+#AddType audio/x-midi .mid
+#AddType video/mpeg .mpeg .mpg .mpe
+#AddType video/quicktime .qt .mov
+#AddType video/x-msvideo .avi
+#AddType video/x-sgi-movie .movie
+#AddType message/external-body
+#AddType message/news
+#AddType message/partial
+#AddType message/rfc822
+#AddType multipart/alternative
+#AddType multipart/appledouble
+#AddType multipart/digest
+#AddType multipart/mixed
+#AddType multipart/parallel
+#AddType x-world/x-vrml .wrl
+
+
+##SSI означает серверные включения, это специальные теги HTML, которые вы можете включить в свои документы HTML для вызова сценариев CGI или другого содержимого HTML.
+#AddHandler server-parsed .html
+#AddHandler server-parsed .shtml
+#AddHandler server-parsed .htm
+
+##ключить CGI.
+#AddHandler cgi-script .cgi
+#Options +ExecCGI
+
+##предотвратить списки каталогов (доступ до файлов)
+#IndexIgnore *
+##or
+#IndexIgnore *.zip
+##or
+#IndexIgnore *.zip *.jpg *.gif
+
+
+#установить часовой пояс даты веб-серверов
+#SetEnv TZ America/Indianapolis
+          #America/New_York - Eastern Time
+          #America/Detroit - Eastern Time - Michigan (most locations)
+          #America/Louisville - Eastern Time (Louisville, Kentucky)
+          #America/Indianapolis - Eastern Standard Time (Indiana, most locations)
+          #America/Indiana/Marengo - Eastern Standard Time (Indiana, Crawford County)
+          #America/Indiana/Knox - Eastern Standard Time (Indiana, Starke County)
+          #America/Indiana/Vevay - Eastern Standard Time (Indiana, Switzerland County)
+          #America/Chicago - Central Time
+          #America/Menominee - Central Time (Michigan, Wisconsin border)
+          #America/Denver - Mountain Time
+          #America/Boise - Mountain Time (South Idaho, East Oregon)
+          #America/Shiprock - Mountain Time (Navajo)
+          #America/Phoenix - Mountain Standard Time (Arizona)
+          #America/Los_Angeles - Pacific Time
+          #America/Anchorage - Alaska Time
+          #America/Juneau - Alaska Time (Alaska panhandle)
+          #America/Yakutat - Alaska Time (Alaska panhandle neck)
+          #America/Nome - Alaska Time (west Alaska)
+          #America/Adak - Aleutian Islands
+          #Pacific/Honolulu - Hawaii
+
+##изменить подпись сервера, которая отображается как часть документов об ошибках Apache (если неправельный EMail)
+#ServerSignature EMail
+#SetEnv SERVER_ADMIN nospace@pleasenospace.com
+## or
+#ServerSignature Off #полностью удалить подпись сервера
+
+##способ отключить каталог с помощью Mod_Rewrite.
+## Enable Mod Rewrite, this is only required once in each .htaccess file
+#RewriteEngine On
+#RewriteBase /
+## Test for access to includes directory
+#RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /directory/ .*$ [NC]
+## Test that file requested has php extension
+#RewriteCond %{REQUEST_FILENAME} ^.+\.php$
+## Forbid Access
+#RewriteRule .* - [F,NS,L]
+
+##граничить доступ к  файлам
+#<FilesMatch "^php5?\.(ini|cgi)$"> #<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh)$">
+#Order Deny,Allow
+#Deny from All
+#Allow from env=REDIRECT_STATUS
+#</FilesMatch>
+
+##Принудительное отображение скриптов в качестве исходного кода
+#RemoveHandler cgi-script .pl .cgi .php .py
+#AddType text/plain .pl .cgi .php .py
+
+
+##Mедиа-файлы будут рассматриваться как загружаемые, а не воспроизводимые браузером.
+#AddType application/octet-stream .zip .mp3 .mp4
+
+
+##Чтобы клиент мог видеть, что файл закодирован
+#AddEncoding x-gzip .gz .tgz
+#ddEncoding x-compress .Z
+
+
+##для отклонения запросов, содержащих недопустимые символы
+#RewriteEngine On
+#RewriteBase /
+#RewriteCond %{THE_REQUEST} !^[A-Z]{3,9}\ [a-zA-Z0-9\.\+_/\-\?\=\&]+\ HTTP/ [NC]
+#RewriteRule .* - [F,NS,L]
+
+
+#Незаменимым механизмом для изменения URL-ссылок “на лету” является модуль mod_rewrite. Его полезность, а вместе с тем, сложность заключается в том, что можно использовать несметное количество правил, включающих еще больше переменных.
+#Для  работы модуля, прежде всего нужны директивы
+#RewriteEngine On (включает работу механизма преобразования)
+#Options FollowSymLinks (условие для работы mod_rewrite).
+
+#RewriteRule ^page1\.html$ http://newdomain.com/ [R=301] #Перенаправление страницы на новый домен
+##Перенаправление сайта с домена без www на домен с www
+#RewriteEngine On
+#RewriteCond %{HTTP_HOST} !^www\..* [NC]
+#RewriteRule ^(.*) http://www.%{HTTP_HOST}/$1 [R=301]
+
+##И наоборот:
+#RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+#RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+##Перенаправление по протоколу HTTPS
+#RewriteEngine On
+#RewriteCond %{HTTPS} !on
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+##Определение кодировки
+#AddDefaultCharset UTF-8
+##AddType "application/x-httpd-php3; charset=windows-1251" .html #для определенного типа файла
